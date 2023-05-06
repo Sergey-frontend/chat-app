@@ -9,8 +9,8 @@ import * as Yup from 'yup';
 import routes from '../../routes';
 
 const schema = Yup.object({
-  username: Yup.string().min(4, 'Логин должен быть не менее 4-х').required(),
-  password: Yup.string().min(4, 'Пароль должен быть не менее 4-х').required(),
+  username: Yup.string().min(4, 'Логин должен быть не менее 4-х символов').required(),
+  password: Yup.string().min(4, 'Пароль должен быть не менее 4-х символов').required(),
 });
 
 const App = () => {
