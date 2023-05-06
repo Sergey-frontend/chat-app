@@ -4,7 +4,7 @@ install:
 start:
 	npm start
 
-build1:
+build:
 	npm run build
 
 lint:

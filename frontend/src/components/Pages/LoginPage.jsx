@@ -1,3 +1,5 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
 } from 'react-bootstrap';
@@ -5,7 +7,6 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import routes from '../../routes';
-// import AuthContext from '../../contexts/AuthContext';
 
 const schema = Yup.object({
   username: Yup.string().min(4, 'Логин должен быть не менее 4-х').required(),
@@ -13,6 +14,8 @@ const schema = Yup.object({
 });
 
 const App = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -25,9 +28,14 @@ const App = () => {
       };
       try {
         const response = await axios.post(routes.loginPath(), userData);
-        console.log(response.data);
+        localStorage.setItem('token', response.data.token);
+        navigate('/');
       } catch (e) {
-        console.log(e);
+        if (!e.isAxiosError) {
+          console.log('Unknown Error');
+          return;
+        }
+        console.log(e.message);
       }
     },
     validationSchema: schema,
