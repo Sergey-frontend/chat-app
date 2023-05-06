@@ -1,13 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const MainPage = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
-  if (!token) {
-    navigate('/login');
-  }
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  });
+
   return (
     <div>
       <h1>Welcome to MainPage</h1>
