@@ -2,7 +2,10 @@ import {
   Form, Button, Container, Row, Col,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import axios from 'axios';
 import * as Yup from 'yup';
+import routes from '../../routes';
+// import AuthContext from '../../contexts/AuthContext';
 
 const schema = Yup.object({
   username: Yup.string().min(4, 'Логин должен быть не менее 4-х').required(),
@@ -15,8 +18,17 @@ const App = () => {
       username: '',
       password: '',
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const userData = {
+        username: values.username,
+        password: values.password,
+      };
+      try {
+        const response = await axios.post(routes.loginPath(), userData);
+        console.log(response.data);
+      } catch (e) {
+        console.log(e);
+      }
     },
     validationSchema: schema,
   });
