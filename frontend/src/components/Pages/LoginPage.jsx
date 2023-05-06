@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, React } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
@@ -14,6 +14,8 @@ const schema = Yup.object({
 });
 
 const App = () => {
+  const [authError, setAuthError] = useState('');
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -32,10 +34,10 @@ const App = () => {
         navigate('/');
       } catch (e) {
         if (!e.isAxiosError) {
-          console.log('Unknown Error');
+          setAuthError('Unknown Error');
           return;
         }
-        console.log(e.message);
+        setAuthError(e.message);
       }
     },
     validationSchema: schema,
@@ -68,6 +70,9 @@ const App = () => {
                   <Button className="col-sm-3" variant="primary" type="submit">
                     Войти
                   </Button>
+                  <div className="text-danger">
+                    <p>{authError}</p>
+                  </div>
                 </div>
               </Row>
             </Form>
