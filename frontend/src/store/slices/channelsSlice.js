@@ -15,5 +15,5 @@ const channelsSlice = createSlice({
   },
 });
 
-export default channelsSlice.reducer;
 export const { addChannels } = channelsSlice.actions;
+export default channelsSlice.reducer;

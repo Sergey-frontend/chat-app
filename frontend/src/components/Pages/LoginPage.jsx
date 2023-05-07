@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -43,7 +43,7 @@ const App = () => {
           setAuthError('Unknown Error');
           return;
         }
-        setAuthError(e.message);
+        setAuthError('проверка');
       }
       // get data(chanels,messages)
       try {
