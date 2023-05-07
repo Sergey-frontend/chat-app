@@ -9,11 +9,11 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialValues,
   reducers: {
-    addChanel: (state, action) => {
+    addChannels: (state, action) => {
       state.channels.push(action.payload);
     },
   },
 });
 
 export default channelsSlice.reducer;
-export const { addChanel } = channelsSlice.actions;
+export const { addChannels } = channelsSlice.actions;

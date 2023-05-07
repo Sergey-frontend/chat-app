@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   Form, Button, Container, Row, Col,
 } from 'react-bootstrap';
@@ -8,6 +9,8 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import routes from '../../routes';
 import useAuth from '../../hooks/useAuth.hook';
+import { addChannels } from '../../store/slices/channelsSlice';
+import { addMessages } from '../../store/slices/messagesSlice';
 
 const schema = Yup.object({
   username: Yup.string().min(4, 'Логин должен быть не менее 4-х символов').required(),
@@ -17,6 +20,7 @@ const schema = Yup.object({
 const App = () => {
   const [authError, setAuthError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { logIn, setUsername, token } = useAuth();
   const formik = useFormik({
     initialValues: {
@@ -28,7 +32,7 @@ const App = () => {
         username: values.username,
         password: values.password,
       };
-      // login
+      // login and add token
       try {
         const response = await axios.post(routes.loginPath(), userData);
         logIn(response.data.token);
@@ -41,7 +45,7 @@ const App = () => {
         }
         setAuthError(e.message);
       }
-      // getdata( chanels,messages)
+      // get data(chanels,messages)
       try {
         const response = await axios.get(routes.usersPath(), {
           headers: {
@@ -50,8 +54,8 @@ const App = () => {
         });
         const data = await response.data;
         console.log(data);
-        // dispatch(setChannels(data.channels));
-        // dispatch(setMessages(data.messages));
+        dispatch(addChannels(data.channels));
+        dispatch(addMessages(data.messages));
       } catch (e) {
         const { statusText } = e.response;
         const message = statusText === 'Unauthorized'
