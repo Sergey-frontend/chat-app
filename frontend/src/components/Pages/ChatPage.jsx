@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import useAuth from '../../hooks/useAuth.hook';
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('user');
+  const { token } = useAuth();
+  console.log(token);
   useEffect(() => {
     if (!token) {
       navigate('/login');

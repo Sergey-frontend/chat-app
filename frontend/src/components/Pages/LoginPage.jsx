@@ -17,7 +17,7 @@ const schema = Yup.object({
 const App = () => {
   const [authError, setAuthError] = useState('');
   const navigate = useNavigate();
-  const { logIn, setUsername } = useAuth();
+  const { logIn, setUsername, token } = useAuth();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -28,8 +28,8 @@ const App = () => {
         username: values.username,
         password: values.password,
       };
+      // login
       try {
-        // registration
         const response = await axios.post(routes.loginPath(), userData);
         logIn(response.data.token);
         setUsername(response.data.username);
@@ -40,6 +40,24 @@ const App = () => {
           return;
         }
         setAuthError(e.message);
+      }
+      // getdata( chanels,messages)
+      try {
+        const response = await axios.get(routes.usersPath(), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.data;
+        console.log(data);
+        // dispatch(setChannels(data.channels));
+        // dispatch(setMessages(data.messages));
+      } catch (e) {
+        const { statusText } = e.response;
+        const message = statusText === 'Unauthorized'
+          ? 'Неверные имя пользователя или пароль'
+          : 'Неизвестная ошибка';
+        setAuthError(message);
       }
     },
     validationSchema: schema,
