@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 const MainPage = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('user');
-  console.log(token);
   useEffect(() => {
     if (!token) {
       navigate('/login');
