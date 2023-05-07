@@ -1,4 +1,4 @@
-import { useState, React } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import routes from '../../routes';
+import useAuth from '../../hooks/useAuth.hook';
 
 const schema = Yup.object({
   username: Yup.string().min(4, 'Логин должен быть не менее 4-х символов').required(),
@@ -15,9 +16,8 @@ const schema = Yup.object({
 
 const App = () => {
   const [authError, setAuthError] = useState('');
-
   const navigate = useNavigate();
-
+  const { logIn, setUsername } = useAuth();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -29,8 +29,10 @@ const App = () => {
         password: values.password,
       };
       try {
+        // registration
         const response = await axios.post(routes.loginPath(), userData);
-        localStorage.setItem('token', response.data.token);
+        logIn(response.data.token);
+        setUsername(response.data.username);
         navigate('/');
       } catch (e) {
         if (!e.isAxiosError) {
