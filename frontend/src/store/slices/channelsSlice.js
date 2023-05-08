@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialValues = {
+const initialState = {
   channels: [],
-  currentChannelId: null,
+  currentChannelId: 1,
 };
 
 const channelsSlice = createSlice({
   name: 'channels',
-  initialValues,
+  initialState,
   reducers: {
     addChannels: (state, action) => {
       state.channels.push(action.payload);

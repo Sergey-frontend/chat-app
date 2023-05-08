@@ -13,8 +13,12 @@ import { addChannels } from '../../store/slices/channelsSlice';
 import { addMessages } from '../../store/slices/messagesSlice';
 
 const schema = Yup.object({
-  username: Yup.string().min(4, 'Логин должен быть не менее 4-х символов').required(),
-  password: Yup.string().min(4, 'Пароль должен быть не менее 4-х символов').required(),
+  username: Yup.string()
+    .min(4, 'Логин должен быть не менее 4-х символов')
+    .required('Обязательное поле'),
+  password: Yup.string()
+    .min(4, 'Пароль должен быть не менее 4-х символов')
+    .required('Обязательное поле'),
 });
 
 const App = () => {
@@ -75,18 +79,30 @@ const App = () => {
             <h1 className="text-center">Войти в чат</h1>
             <Form onSubmit={formik.handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control value={formik.values.username} onChange={formik.handleChange} name="username" type="text" placeholder="Ваш логин" />
-                { formik.touched.username && formik.errors.username && (
-                <Form.Text className="text-danger">
-                  { formik.errors.username }
-                </Form.Text>
+                <Form.Control
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  name="username"
+                  type="text"
+                  placeholder="Ваш логин"
+                />
+                {formik.touched.username && formik.errors.username && (
+                  <Form.Text className="text-danger">
+                    {formik.errors.username}
+                  </Form.Text>
                 )}
                 <Form.Text className="text-danger" />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control value={formik.values.password} onChange={formik.handleChange} name="password" type="password" placeholder="Ваш пароль" />
+                <Form.Control
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  name="password"
+                  type="password"
+                  placeholder="Ваш пароль"
+                />
                 <Form.Text className="text-danger">
-                  { formik.touched.password && formik.errors.password }
+                  {formik.touched.password && formik.errors.password}
                 </Form.Text>
               </Form.Group>
               <Row>
