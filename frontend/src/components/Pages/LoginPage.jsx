@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   Form, Button, Container, Row, Col,
@@ -23,7 +22,6 @@ const schema = Yup.object({
 
 const App = () => {
   const [authError, setAuthError] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { logIn, setUsername, token } = useAuth();
   const formik = useFormik({
@@ -41,7 +39,6 @@ const App = () => {
         const response = await axios.post(routes.loginPath(), userData);
         logIn(response.data.token);
         setUsername(response.data.username);
-        navigate('/');
       } catch (e) {
         if (!e.isAxiosError) {
           setAuthError('Unknown Error');

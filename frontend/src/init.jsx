@@ -8,7 +8,6 @@ import store from './store/store';
 
 const init = async () => {
   const i18n = i18next.createInstance();
-
   await i18n.use(initReactI18next).init({
     resources,
     fallbackLng: 'ru',
