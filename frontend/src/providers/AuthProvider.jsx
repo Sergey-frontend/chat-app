@@ -1,35 +1,23 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const currentToken = localStorage.getItem('user');
-  const [token, setToken] = useState(currentToken || null);
-  const [username, setUsername] = useState(null);
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const [user, setUser] = useState(currentUser || null);
 
-  const logIn = useCallback((userToken) => {
-    localStorage.setItem('user', userToken);
-    setToken(userToken);
-    navigate('/');
-  }, [navigate]);
+  const logIn = useCallback((userData) => {
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+  }, []);
+
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
-    setToken(null);
-    navigate('/');
-  }, [navigate]);
+    setUser(null);
+  }, []);
 
-  const authValue = useMemo(
-    () => ({
-      username,
-      setUsername,
-      token,
-      setToken,
-      logOut,
-      logIn,
-    }),
-    [username, setUsername, token, setToken, logOut, logIn],
-  );
+  const authValue = useMemo(() => ({
+    user, logIn, logOut,
+  }), [user, logIn, logOut]);
 
   return (
     <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>

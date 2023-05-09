@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
 } from 'react-bootstrap';
@@ -21,48 +22,41 @@ const schema = Yup.object({
 });
 
 const App = () => {
+  const navigate = useNavigate();
   const [authError, setAuthError] = useState('');
   const dispatch = useDispatch();
-  const { logIn, setUsername, token } = useAuth();
+  const { logIn } = useAuth();
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async (defaultValue) => {
       const userData = {
-        username: values.username,
-        password: values.password,
+        username: defaultValue.username,
+        password: defaultValue.password,
       };
-      // login and add token
       try {
-        const response = await axios.post(routes.loginPath(), userData);
-        logIn(response.data.token);
-        setUsername(response.data.username);
-      } catch (e) {
-        if (!e.isAxiosError) {
-          setAuthError('Unknown Error');
-          return;
-        }
-        setAuthError('проверка');
-      }
-      // get data(chanels,messages)
-      try {
-        const response = await axios.get(routes.usersPath(), {
+        const responseLogin = await axios.post(routes.loginPath(), userData);
+        logIn(responseLogin.data);
+        const responseData = await axios.get(routes.usersPath(), {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${responseLogin.data.token}`,
           },
         });
-        const data = await response.data;
+        const data = await responseData.data;
         console.log(data);
         dispatch(addChannels(data.channels));
         dispatch(addMessages(data.messages));
+        navigate('/');
       } catch (e) {
+        if (!e.isAxiosError) {
+          console.log(e);
+          return;
+        }
         const { statusText } = e.response;
-        const message = statusText === 'Unauthorized'
-          ? 'Неверные имя пользователя или пароль'
-          : 'Неизвестная ошибка';
-        setAuthError(message);
+        setAuthError(statusText);
+        throw e;
       }
     },
     validationSchema: schema,
