@@ -9,7 +9,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import routes from '../../routes';
 import useAuth from '../../hooks/useAuth.hook';
-import { addChannels } from '../../store/slices/channelsSlice';
+import { setChannels } from '../../store/slices/channelsSlice';
 import { addMessages } from '../../store/slices/messagesSlice';
 
 const schema = Yup.object({
@@ -38,15 +38,16 @@ const App = () => {
       };
       try {
         const responseLogin = await axios.post(routes.loginPath(), userData);
-        logIn(responseLogin.data);
         const responseData = await axios.get(routes.usersPath(), {
           headers: {
-            Authorization: `Bearer ${responseLogin.data.token}`,
+            // Authorization: `Bearer ${responseLogin.data.token}`,
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4MzY2MDk2M30.8hdWPbw0HxpVroKoAvVHd6UPC19eQ3bofDk1Y6Yehtg',
           },
         });
+        const user = await responseLogin.data;
+        logIn(user);
         const data = await responseData.data;
-        console.log(data);
-        dispatch(addChannels(data.channels));
+        dispatch(setChannels(data.channels));
         dispatch(addMessages(data.messages));
         navigate('/');
       } catch (e) {
@@ -97,8 +98,8 @@ const App = () => {
                 </Form.Text>
               </Form.Group>
               <Row>
-                <div className="row align-items-center">
-                  <Button className="col-sm-3" variant="primary" type="submit">
+                <div>
+                  <Button className="mb-10 w-100" variant="primary" type="submit">
                     Войти
                   </Button>
                   <div className="text-danger">
