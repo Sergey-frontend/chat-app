@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {
@@ -10,17 +10,19 @@ const AuthProvider = ({ children }) => {
     setUser(userData);
   }, []);
 
-  const logOut = useCallback(() => {
-    localStorage.removeItem('user');
-    setUser(null);
-  }, []);
+  const getAuthHeaders = useCallback(() => ({
+    headers: { Authorization: `Bearer ${user.token}` },
+  }), [user]);
 
   const authValue = useMemo(() => ({
-    user, logIn, logOut,
-  }), [user, logIn, logOut]);
+    user, logIn, getAuthHeaders,
+  }), [user, logIn, getAuthHeaders]);
 
   return (
-    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>
+      {children}
+    </AuthContext.Provider>
   );
 };
+
 export default AuthProvider;

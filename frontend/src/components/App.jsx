@@ -1,17 +1,22 @@
-import { Route, Routes } from 'react-router-dom';
-import ChatPage from './Pages/ChatPage';
-import LoginPage from './Pages/LoginPage';
-import NotFoundPage from './Pages/NotFoundPage';
-import AuthProvider from '../providers/AuthProvider';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import ChatPage from './ChatPage';
+import LoginPage from './LoginPage';
+import NotFoundPage from './NotFoundPage';
+import AuthProvider from './AuthProvider';
+import PrivateRoute from './PrivateRoute';
 
-const App = () => (
-  <AuthProvider>
-    <Routes>
-      <Route path="/" element={<ChatPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-  </AuthProvider>
-);
+const App = () => {
+  <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<ChatPage />} />
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AuthProvider>
+  </BrowserRouter>;
+};
 
 export default App;

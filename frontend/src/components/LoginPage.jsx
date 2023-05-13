@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
@@ -7,62 +6,51 @@ import {
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
-import routes from '../../routes';
-import useAuth from '../../hooks/useAuth.hook';
-import { setChannels } from '../../store/slices/channelsSlice';
-import { addMessages } from '../../store/slices/messagesSlice';
+import routes from '../utils/routes';
+import useAuth from '../hooks/useAuth.hook';
 
-const schema = Yup.object({
-  username: Yup.string()
+const validate = Yup.object({
+  username: Yup
+    .string()
     .min(4, 'Логин должен быть не менее 4-х символов')
     .required('Обязательное поле'),
-  password: Yup.string()
-    .min(4, 'Пароль должен быть не менее 4-х символов')
+  password: Yup
+    .string()
+    .min(4, 'Логин должен быть не менее 4-х символов')
     .required('Обязательное поле'),
 });
 
-const App = () => {
+const LoginPage = () => {
+  const [authError, setAuthError] = useState(null);
   const navigate = useNavigate();
-  const [authError, setAuthError] = useState('');
-  const dispatch = useDispatch();
   const { logIn } = useAuth();
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: async (defaultValue) => {
-      const userData = {
-        username: defaultValue.username,
-        password: defaultValue.password,
-      };
+    onSubmit: async (value) => {
+      const { username, password } = value;
+      const userData = { username, password };
       try {
-        const responseLogin = await axios.post(routes.loginPath(), userData);
-        const responseData = await axios.get(routes.usersPath(), {
-          headers: {
-            // Authorization: `Bearer ${responseLogin.data.token}`,
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4MzY2MDk2M30.8hdWPbw0HxpVroKoAvVHd6UPC19eQ3bofDk1Y6Yehtg',
-          },
-        });
-        const user = await responseLogin.data;
-        logIn(user);
-        const data = await responseData.data;
-        dispatch(setChannels(data.channels));
-        dispatch(addMessages(data.messages));
+        const response = await axios.post(routes.loginPath(), userData);
+        logIn(response.data);
         navigate('/');
-      } catch (e) {
-        if (!e.isAxiosError) {
-          console.log(e);
-          return;
+        setAuthError(null);
+      } catch (error) {
+        if (!error.isAxiosError) {
+          setAuthError('Неизвестная ошибка');
         }
-        const { statusText } = e.response;
-        setAuthError(statusText);
-        throw e;
+        const { statusText } = error.response;
+        const message = statusText === 'Unauthorized'
+          ? 'Неверное имя пользователя или пароль'
+          : 'Неизвестная ошибка';
+        setAuthError(message);
       }
     },
-    validationSchema: schema,
+    validationSchema: validate,
   });
-
   return (
     <Container className="mt-50 mt-5">
       <Row>
@@ -79,9 +67,9 @@ const App = () => {
                   placeholder="Ваш логин"
                 />
                 {formik.touched.username && formik.errors.username && (
-                  <Form.Text className="text-danger">
-                    {formik.errors.username}
-                  </Form.Text>
+                <Form.Text className="text-danger">
+                  {formik.errors.username}
+                </Form.Text>
                 )}
                 <Form.Text className="text-danger" />
               </Form.Group>
@@ -115,4 +103,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default LoginPage;
