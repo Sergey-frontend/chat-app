@@ -5,7 +5,7 @@ import ChatPage from './ChatPage';
 import LoginPage from './LoginPage';
 import NotFoundPage from './NotFoundPage';
 
-const App = () => {
+const App = () => (
   <BrowserRouter>
     <AuthProvider>
       <Routes>
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
-  </BrowserRouter>;
-};
+  </BrowserRouter>
+);
 
 export default App;
