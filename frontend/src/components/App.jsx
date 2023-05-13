@@ -1,9 +1,9 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import AuthProvider from './AuthProvider';
+import PrivateRoute from './PrivateRoute';
 import ChatPage from './ChatPage';
 import LoginPage from './LoginPage';
 import NotFoundPage from './NotFoundPage';
-import AuthProvider from './AuthProvider';
-import PrivateRoute from './PrivateRoute';
 
 const App = () => {
   <BrowserRouter>

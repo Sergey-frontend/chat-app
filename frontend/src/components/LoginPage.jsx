@@ -91,7 +91,7 @@ const LoginPage = () => {
                     Войти
                   </Button>
                   <div className="text-danger">
-                    <p>{authError}</p>
+                    {authError && <p>{authError}</p>}
                   </div>
                 </div>
               </Row>
