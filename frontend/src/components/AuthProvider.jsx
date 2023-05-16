@@ -10,13 +10,18 @@ const AuthProvider = ({ children }) => {
     setUser(userData);
   }, []);
 
+  const logOut = useCallback(() => {
+    localStorage.removeItem('user');
+    setUser(null);
+  }, []);
+
   const getAuthHeaders = useCallback(() => ({
     headers: { Authorization: `Bearer ${user.token}` },
   }), [user]);
 
   const authValue = useMemo(() => ({
-    user, logIn, getAuthHeaders,
-  }), [user, logIn, getAuthHeaders]);
+    user, logIn, logOut, getAuthHeaders,
+  }), [user, logIn, logOut, getAuthHeaders]);
 
   return (
     <AuthContext.Provider value={authValue}>
