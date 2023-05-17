@@ -97,6 +97,14 @@ const LoginPage = () => {
               </Row>
             </Form>
           </div>
+          <div className="card-footer mb-1">
+            <div className="text-center">
+              <span>Нет аккаунта? </span>
+              <a href="/signup">
+                Регистрация
+              </a>
+            </div>
+          </div>
         </Col>
       </Row>
     </Container>

@@ -4,6 +4,7 @@ import PrivateRoute from './PrivateRoute';
 import ChatPage from './ChatPage';
 import LoginPage from './LoginPage';
 import NotFoundPage from './NotFoundPage';
+import SignUpPage from './SignUpPage';
 
 const App = () => (
   <BrowserRouter>
@@ -14,6 +15,8 @@ const App = () => (
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+
       </Routes>
     </AuthProvider>
   </BrowserRouter>
