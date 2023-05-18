@@ -1,46 +1,81 @@
 import { Col } from 'react-bootstrap';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import useSocketApi from '../hooks/useSocketApi.hook';
+import useAuth from '../hooks/useAuth.hook';
 
 const Messages = () => {
-  const [inputValue, setInputValue] = useState('');
+  const chatApi = useSocketApi();
+  const { user } = useAuth();
 
-  const formHendler = (e) => {
+  const messages = useSelector((state) => state.messages.messages);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const channels = useSelector((state) => state.channels.channels);
+
+  const currentChannel = channels.find((c) => c.id === currentChannelId);
+
+  const [inputValue, setInputValue] = useState('');
+  const controlInput = (e) => {
     e.preventDefault();
     setInputValue(e.target.value);
   };
 
-  const renderMessages = () => {
-    const nameUser = 'admin';
-    const textMessage = 'qwerty';
-    // this fn added messages into return
-    // this a default html
+  const messagesList = messages.map((msg) => {
+    const { body, username, id } = msg;
     return (
-      <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+      <div key={id} id="messages-box" className="chat-messages overflow-auto px-5 ">
         <div className="text-break mb-2">
-          <b>{nameUser}</b>
+          <b>{username}</b>
           :
           {' '}
-          {textMessage}
+          {body}
         </div>
       </div>
     );
+  });
+
+  const formHendler = (e) => {
+    e.preventDefault();
+    e.target.value = '';
+    const formData = new FormData(e.target);
+    const body = formData.get('body');
+    const data = {
+      body,
+      channelId: currentChannelId,
+      username: user.username,
+    };
+    chatApi.sendMessage(data);
   };
+
   return (
     <Col className="col-9 p-0 h-100">
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
-          <b># general</b>
+          <b>
+            #
+            {' '}
+            {currentChannel ? currentChannel.name : 'LOADING'}
+          </b>
         </p>
-        <span className="text-muted">0 сообщений</span>
+        <span className="text-muted">
+          {messages.length}
+          {' '}
+          сообщений
+        </span>
       </div>
 
-      {renderMessages}
+      {messagesList}
 
       <div className="mt-auto px-5 py-3">
-        <form noValidate="" className="py-1 border rounded-2">
+        <form
+          onSubmit={formHendler}
+          noValidate=""
+          className="py-1
+        border rounded-2"
+        >
           <div className="input-group has-validation">
             <input
-              onChange={formHendler}
+              onChange={controlInput}
               name="body"
               aria-label="Новое сообщение"
               placeholder="Введите сообщение..."

@@ -7,8 +7,7 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.channels);
   const currentId = useSelector((state) => state.channels.currentChannelId);
-
-  const channelList = channels.map(({ id, name, removable }) => {
+  const channelsList = channels.map(({ id, name, removable }) => {
     const activeclassName = cn({
       'btn-secondary': currentId === id,
     });
@@ -76,8 +75,7 @@ const Channels = () => {
         id="channels-box"
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
       >
-        {/* ВОТ СЮДА  */}
-        {channelList}
+        {channelsList}
       </ul>
     </Col>
   );
