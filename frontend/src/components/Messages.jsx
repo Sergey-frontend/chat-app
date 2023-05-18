@@ -9,10 +9,9 @@ const Messages = () => {
   const { user } = useAuth();
 
   const messages = useSelector((state) => state.messages.messages);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const channels = useSelector((state) => state.channels.channels);
-
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
   const currentChannel = channels.find((c) => c.id === currentChannelId);
+  const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
 
   const [inputValue, setInputValue] = useState('');
   const controlInput = (e) => {
@@ -20,7 +19,7 @@ const Messages = () => {
     setInputValue(e.target.value);
   };
 
-  const messagesList = messages.map((msg) => {
+  const messagesList = currentChannelMessages.map((msg) => {
     const { body, username, id } = msg;
     return (
       <div key={id} id="messages-box" className="chat-messages overflow-auto px-5 ">
@@ -58,7 +57,7 @@ const Messages = () => {
           </b>
         </p>
         <span className="text-muted">
-          {messages.length}
+          {currentChannelMessages.length}
           {' '}
           сообщений
         </span>
