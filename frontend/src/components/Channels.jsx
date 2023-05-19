@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { setCurrentChannelId } from '../store/slices/channelsSlice';
 
-const Channels = () => {
+const Channels = ({ handleShow }) => {
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels.channels);
-  const currentId = useSelector((state) => state.channels.currentChannelId);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
+
   const channelsList = channels.map(({ id, name, removable }) => {
     const activeclassName = cn({
-      'btn-secondary': currentId === id,
+      'btn-secondary': currentChannelId === id,
     });
 
     if (!removable) {
@@ -55,6 +55,7 @@ const Channels = () => {
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>Каналы</b>
         <button
+          onClick={handleShow}
           type="button"
           className="p-0 text-primary btn btn-group-vertical"
         >

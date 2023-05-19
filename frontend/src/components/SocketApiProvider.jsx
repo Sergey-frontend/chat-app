@@ -23,7 +23,6 @@ const SocketApiProvider = ({ children, socket }) => {
     });
   });
 
-  // eslint-disable
   const api = {
     sendMessage: withAcknowledgement((...args) => socket.volatile.emit('newMessage', ...args)),
     // createChannel: withAcknowledgement((...args) => socket.volatile.emit('newChannel', ...args)),

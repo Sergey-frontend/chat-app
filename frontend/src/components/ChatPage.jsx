@@ -2,7 +2,7 @@ import {
   Row, Container,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Channels from './Channels';
@@ -11,10 +11,16 @@ import useAuth from '../hooks/useAuth.hook';
 import routes from '../utils/routes';
 import { setChannels } from '../store/slices/channelsSlice';
 import { setMessages } from '../store/slices/messagesSlice';
+import AddChannelModal from './modals/AddChannelModal';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { getAuthHeaders } = useAuth();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -32,10 +38,11 @@ const ChatPage = () => {
         <Header />
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
           <Row className="h-100 bg-white flex-md-row">
-            <Channels />
+            <Channels handleShow={handleShow} />
             <Messages />
           </Row>
         </Container>
+        <AddChannelModal show={show} handleClose={handleClose} />
       </div>
     </div>
   );
