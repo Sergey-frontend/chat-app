@@ -22,13 +22,11 @@ const Messages = () => {
   const messagesList = currentChannelMessages.map((msg) => {
     const { body, username, id } = msg;
     return (
-      <div key={id} id="messages-box" className="chat-messages overflow-auto px-5 ">
-        <div className="text-break mb-2">
-          <b>{username}</b>
-          :
-          {' '}
-          {body}
-        </div>
+      <div key={id} className="text-break mb-2">
+        <b>{username}</b>
+        :
+        {' '}
+        {body}
       </div>
     );
   });
@@ -63,7 +61,9 @@ const Messages = () => {
         </span>
       </div>
 
-      {messagesList}
+      <div id="messages-box" className="chat-messages overflow-auto px-5 " style={{ height: '60vh' }}>
+        {messagesList}
+      </div>
 
       <div className="mt-auto px-5 py-3">
         <form

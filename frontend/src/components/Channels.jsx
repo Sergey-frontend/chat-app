@@ -45,6 +45,14 @@ const Channels = ({ handleShow }) => {
           >
             <span className="visually-hidden">Управление каналом</span>
           </button>
+          <div x-placement="bottom-start" aria-labelledby="react-aria5473094164-1" className="dropdown-menu" data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-start" style={{ position: 'absolute', inset: '0px auto auto 0px', transform: 'translate(127px, 280px)' }}>
+            <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">
+              Удалить
+            </a>
+            <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">
+              Переименовать
+            </a>
+          </div>
         </div>
       </li>
     );

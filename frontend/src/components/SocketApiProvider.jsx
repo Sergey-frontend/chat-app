@@ -25,9 +25,9 @@ const SocketApiProvider = ({ children, socket }) => {
 
   const api = {
     sendMessage: withAcknowledgement((...args) => socket.volatile.emit('newMessage', ...args)),
-    // createChannel: withAcknowledgement((...args) => socket.volatile.emit('newChannel', ...args)),
-    // renameChannel: withAcknowledgement((...args) => socket.volatile.emit('renameChannel', ...args)),
-    // removeChannel: withAcknowledgement((...args) => socket.volatile.emit('removeChannel', ...args)),
+    createChannel: withAcknowledgement((...args) => socket.volatile.emit('newChannel', ...args)),
+    renameChannel: withAcknowledgement((...args) => socket.volatile.emit('renameChannel', ...args)),
+    removeChannel: withAcknowledgement((...args) => socket.volatile.emit('removeChannel', ...args)),
   };
   return (
     <SocketContext.Provider value={api}>
