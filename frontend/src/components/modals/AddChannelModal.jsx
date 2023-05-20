@@ -1,21 +1,18 @@
 // import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import { Button, Form, Modal } from 'react-bootstrap';
 
 const AddChannelModal = ({ show, handleClose }) => (
 
   <Modal show={show} onHide={handleClose}>
     <Modal.Header closeButton>
-      <Modal.Title>Modal heading</Modal.Title>
+      <Modal.Title>Добавить канал</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Email address</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="name@example.com"
+            type="name"
+            placeholder="Введите имя канала"
             autoFocus
           />
         </Form.Group>
@@ -23,10 +20,10 @@ const AddChannelModal = ({ show, handleClose }) => (
     </Modal.Body>
     <Modal.Footer>
       <Button variant="secondary" onClick={handleClose}>
-        Close
+        Отменить
       </Button>
       <Button variant="primary" onClick={handleClose}>
-        Save Changes
+        Отправить
       </Button>
     </Modal.Footer>
   </Modal>
