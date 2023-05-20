@@ -7,8 +7,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSocketApi from '../../hooks/useSocketApi.hook';
 import * as channelActions from '../../store/slices/channelsSlice';
+import { hideModal } from '../../store/slices/modalsSlice';
 
-const AddChannelModal = ({ show, handleClose }) => {
+const AddChannelModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
   const chatApi = useSocketApi();
@@ -37,7 +38,8 @@ const AddChannelModal = ({ show, handleClose }) => {
         dispatch(channelActions.setCurrentChannelId(response.id));
         console.log(response);
         resetForm({ values: '' });
-        handleClose();
+        // handleClose();
+        dispatch(hideModal());
       } catch (error) {
         console.error(error);
       }
@@ -47,8 +49,8 @@ const AddChannelModal = ({ show, handleClose }) => {
   });
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
+    <Modal show>
+      <Modal.Header closeButton onHide={() => dispatch(hideModal())}>
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -69,7 +71,7 @@ const AddChannelModal = ({ show, handleClose }) => {
               && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             }
           </Form.Group>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => dispatch(hideModal())}>
             Отменить
           </Button>
           <Button

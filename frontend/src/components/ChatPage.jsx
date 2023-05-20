@@ -2,8 +2,8 @@ import {
   Row, Container,
 } from 'react-bootstrap';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
 import Channels from './Channels';
 import Messages from './Messages';
@@ -11,16 +11,20 @@ import useAuth from '../hooks/useAuth.hook';
 import routes from '../utils/routes';
 import { setChannels } from '../store/slices/channelsSlice';
 import { setMessages } from '../store/slices/messagesSlice';
-import AddChannelModal from './modals/AddChannelModal';
+import getModal from './modals';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { getAuthHeaders } = useAuth();
+  const modalType = useSelector((state) => state.modal.modalType);
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const renderModal = (type) => {
+    if (!type) {
+      return null;
+    }
+    const Modal = getModal(type);
+    return <Modal />;
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -38,11 +42,11 @@ const ChatPage = () => {
         <Header />
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
           <Row className="h-100 bg-white flex-md-row">
-            <Channels handleShow={handleShow} />
+            <Channels />
             <Messages />
           </Row>
+          {renderModal(modalType)}
         </Container>
-        <AddChannelModal show={show} handleClose={handleClose} />
       </div>
     </div>
   );

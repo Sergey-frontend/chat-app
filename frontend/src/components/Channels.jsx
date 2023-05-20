@@ -1,69 +1,72 @@
-import { Col } from 'react-bootstrap';
+import { Col, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { setCurrentChannelId } from '../store/slices/channelsSlice';
+import { showModal } from '../store/slices/modalsSlice';
 
-const Channels = ({ handleShow }) => {
+const Channels = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((state) => state.channels);
 
-  const channelsList = channels.map(({ id, name, removable }) => {
-    const activeclassName = cn({
-      'btn-secondary': currentChannelId === id,
-    });
+  const renderChannels = () => {
+    const channelsList = channels.map(({ id, name, removable }) => {
+      const activeclassName = cn('btn', {
+        'btn-secondary': id === currentChannelId,
+        'btn-outline-secondary': id !== currentChannelId,
+      });
 
-    if (!removable) {
+      if (!removable) {
+        return (
+          <li key={id} className="nav-item w-100">
+            <button
+              onClick={() => dispatch(setCurrentChannelId(id))}
+              type="button"
+              className={`w-100 text-start rounded-0 ${activeclassName}`}
+            >
+              <span className="me-1">#</span>
+              {name}
+            </button>
+          </li>
+        );
+      }
+
       return (
         <li key={id} className="nav-item w-100">
-          <button
-            onClick={() => dispatch(setCurrentChannelId(id))}
-            type="button"
-            className={`w-100 rounded-0 text-start btn ${activeclassName}`}
-          >
-            <span className="me-1">#</span>
-            {name}
-          </button>
+          <div role="group" className="d-flex dropdown btn-group">
+            <Dropdown as={ButtonGroup} className="w-100">
+              <button
+                onClick={() => dispatch(setCurrentChannelId(id))}
+                type="button"
+                className={`w-100 text-start rounded-0 ${activeclassName}`}
+              >
+                <span className="me-1">#</span>
+                {name}
+              </button>
+
+              <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" className={activeclassName}>
+                <span className="visually-hidden">Переименовать</span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  Переименовать
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  Удалить
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </li>
       );
-    }
-    return (
-      <li key={id} className="nav-item w-100">
-        <div role="group" className="d-flex dropdown btn-group">
-          <button
-            onClick={() => dispatch(setCurrentChannelId(id))}
-            type="button"
-            className={`w-100 rounded-0 text-start text-truncate btn ${activeclassName}`}
-          >
-            <span className="me-1">#</span>
-            {name}
-          </button>
-          <button
-            type="button"
-            id="react-aria3537157405-2"
-            aria-expanded="false"
-            className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn btn-secondary"
-          >
-            <span className="visually-hidden">Управление каналом</span>
-          </button>
-          <div x-placement="bottom-start" aria-labelledby="react-aria5473094164-1" className="dropdown-menu" data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-start" style={{ position: 'absolute', inset: '0px auto auto 0px', transform: 'translate(127px, 280px)' }}>
-            <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">
-              Удалить
-            </a>
-            <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">
-              Переименовать
-            </a>
-          </div>
-        </div>
-      </li>
-    );
-  });
-
+    });
+    return channelsList;
+  };
   return (
     <Col className="border-end col-3">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>Каналы</b>
         <button
-          onClick={handleShow}
+          onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))}
           type="button"
           className="p-0 text-primary btn btn-group-vertical"
         >
@@ -84,7 +87,7 @@ const Channels = ({ handleShow }) => {
         id="channels-box"
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
       >
-        {channelsList}
+        {renderChannels()}
       </ul>
     </Col>
   );
