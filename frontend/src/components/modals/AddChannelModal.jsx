@@ -60,15 +60,15 @@ const AddChannelModal = ({ show, handleClose }) => {
             />
           </Form.Group>
           <Button variant="secondary" onClick={handleClose}>
-          Отменить
-        </Button>
-        <Button
-          variant="primary"
-          onClick={handleClose}
-          type="submit"
-        >
-          Отправить
-        </Button>
+            Отменить
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleClose}
+            type="submit"
+          >
+            Отправить
+          </Button>
         </Form>
       </Modal.Body>
     </Modal>
