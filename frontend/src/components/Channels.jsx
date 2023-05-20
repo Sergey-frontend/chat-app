@@ -33,9 +33,8 @@ const Channels = () => {
       return (
         <li key={id} className="nav-item w-100">
           <div role="group" className="d-flex dropdown btn-group">
-            <Dropdown as={ButtonGroup} className="w-100">
+            <Dropdown as={ButtonGroup} className="w-100" onClick={() => dispatch(setCurrentChannelId(id))}>
               <button
-                onClick={() => dispatch(setCurrentChannelId(id))}
                 type="button"
                 className={`w-100 text-start rounded-0 ${activeclassName}`}
               >
@@ -43,14 +42,23 @@ const Channels = () => {
                 {name}
               </button>
 
-              <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" className={activeclassName}>
+              <Dropdown.Toggle
+                split
+                variant="outline-secondary"
+                id="dropdown-split-basic"
+                className={activeclassName}
+              >
                 <span className="visually-hidden">Переименовать</span>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}
+                >
                   Переименовать
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => dispatch(showModal({ modalType: 'removing', channelId: id }))}
+                >
                   Удалить
                 </Dropdown.Item>
               </Dropdown.Menu>

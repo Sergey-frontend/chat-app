@@ -36,9 +36,7 @@ const AddChannelModal = () => {
       try {
         const response = await chatApi.createChannel(channelData);
         dispatch(channelActions.setCurrentChannelId(response.id));
-        console.log(response);
         resetForm({ values: '' });
-        // handleClose();
         dispatch(hideModal());
       } catch (error) {
         console.error(error);
