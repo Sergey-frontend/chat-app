@@ -17,12 +17,13 @@ const init = async (socket) => {
     store.dispatch(addChannel(payload));
   });
   socket.on('removeChannel', (payload) => {
-    store.dispatch(removeChannel({ channelId: payload.id }));
+    store.dispatch(removeChannel(payload));
   });
   socket.on('renameChannel', (payload) => {
     store.dispatch(renameChannel({
-      channelId: payload.id,
-      channelName: payload.name,
+      id: payload.id,
+      name: payload.name,
+      removable: true,
     }));
   });
 
