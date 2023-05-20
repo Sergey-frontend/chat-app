@@ -1,5 +1,7 @@
 // import React, { useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import {
+  Button, Form, Modal, FormText,
+} from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -24,7 +26,7 @@ const AddChannelModal = ({ show, handleClose }) => {
       name: '',
     },
 
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const channelData = {
         name: values.name,
         removable: true,
@@ -34,8 +36,10 @@ const AddChannelModal = ({ show, handleClose }) => {
         const response = await chatApi.createChannel(channelData);
         dispatch(channelActions.setCurrentChannelId(response.id));
         console.log(response);
+        resetForm({ values: '' });
+        handleClose();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
 
@@ -57,14 +61,20 @@ const AddChannelModal = ({ show, handleClose }) => {
               name="name"
               placeholder="Введите имя канала"
               autoFocus
+              isInvalid={formik.errors.name && formik.touched.name}
             />
+            {
+              formik.errors.name
+              && formik.touched.name
+              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
+            }
           </Form.Group>
           <Button variant="secondary" onClick={handleClose}>
             Отменить
           </Button>
           <Button
             variant="primary"
-            onClick={handleClose}
+            onClick={formik.handleSubmit}
             type="submit"
           >
             Отправить
