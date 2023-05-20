@@ -7,19 +7,20 @@ import store from './store/store';
 import App from './components/App';
 import SocketApiProvider from './components/SocketApiProvider.jsx';
 import { addMessage } from './store/slices/messagesSlice.js';
+import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 
 const init = async (socket) => {
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
   });
   socket.on('newChannel', (payload) => {
-    store.dispatch(actions.addChannel({ channel: payload }));
+    store.dispatch(addChannel({ channel: payload }));
   });
   socket.on('removeChannel', (payload) => {
-    store.dispatch(actions.removeChannel({ channelId: payload.id }));
+    store.dispatch(removeChannel({ channelId: payload.id }));
   });
   socket.on('renameChannel', (payload) => {
-    store.dispatch(actions.renameChannel({
+    store.dispatch(renameChannel({
       channelId: payload.id,
       channelName: payload.name,
     }));

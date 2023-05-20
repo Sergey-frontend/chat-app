@@ -31,7 +31,7 @@ const AddChannelModal = ({ show, handleClose }) => {
       };
 
       try {
-        const response = await chatApi.AddChannel(channelData);
+        const response = await chatApi.createChannel(channelData);
         dispatch(channelActions.setCurrentChannelId(response.id));
         console.log(response);
       } catch (error) {
@@ -53,24 +53,24 @@ const AddChannelModal = ({ show, handleClose }) => {
             <Form.Control
               value={formik.values.name}
               onChange={formik.handleChange}
-              type="name"
+              type="text"
+              name="name"
               placeholder="Введите имя канала"
               autoFocus
             />
           </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
           Отменить
         </Button>
         <Button
           variant="primary"
           onClick={handleClose}
+          type="submit"
         >
           Отправить
         </Button>
-      </Modal.Footer>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 };
