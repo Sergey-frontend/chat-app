@@ -52,62 +52,69 @@ const LoginPage = () => {
     validationSchema: validate,
   });
   return (
-    <Container className="mt-50 mt-5">
-      <Row>
-        <Col className=" border .mx-auto mb-5">
-          <div style={{ padding: '15px' }}>
-            <h1 className="text-center">Войти в чат</h1>
-            <Form onSubmit={formik.handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  name="username"
-                  type="text"
-                  placeholder="Ваш логин"
-                />
-                {formik.touched.username && formik.errors.username && (
-                <Form.Text className="text-danger">
-                  {formik.errors.username}
-                </Form.Text>
-                )}
-                <Form.Text className="text-danger" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  name="password"
-                  type="password"
-                  placeholder="Ваш пароль"
-                />
-                <Form.Text className="text-danger">
-                  {formik.touched.password && formik.errors.password}
-                </Form.Text>
-              </Form.Group>
-              <Row>
-                <div>
-                  <Button className="mb-10 w-100" variant="primary" type="submit">
-                    Войти
-                  </Button>
-                  <div className="text-danger">
-                    {authError && <p>{authError}</p>}
+    <>
+      <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+        <Container>
+          <a href="/" className="navbar-brand">HexletChat</a>
+        </Container>
+      </nav>
+      <Container className="mt-50 mt-5">
+        <Row>
+          <Col className=" border .mx-auto mb-5">
+            <div style={{ padding: '15px' }}>
+              <h1 className="text-center">Войти в чат</h1>
+              <Form onSubmit={formik.handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Control
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    name="username"
+                    type="text"
+                    placeholder="Ваш логин"
+                  />
+                  {formik.touched.username && formik.errors.username && (
+                  <Form.Text className="text-danger">
+                    {formik.errors.username}
+                  </Form.Text>
+                  )}
+                  <Form.Text className="text-danger" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Control
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    name="password"
+                    type="password"
+                    placeholder="Ваш пароль"
+                  />
+                  <Form.Text className="text-danger">
+                    {formik.touched.password && formik.errors.password}
+                  </Form.Text>
+                </Form.Group>
+                <Row>
+                  <div>
+                    <Button className="mb-10 w-100" variant="primary" type="submit">
+                      Войти
+                    </Button>
+                    <div className="text-danger">
+                      {authError && <p>{authError}</p>}
+                    </div>
                   </div>
-                </div>
-              </Row>
-            </Form>
-          </div>
-          <div className="card-footer mb-1">
-            <div className="text-center">
-              <span>Нет аккаунта? </span>
-              <a href="/signup">
-                Регистрация
-              </a>
+                </Row>
+              </Form>
             </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+            <div className="card-footer mb-1">
+              <div className="text-center">
+                <span>Нет аккаунта? </span>
+                <a href="/signup">
+                  Регистрация
+                </a>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

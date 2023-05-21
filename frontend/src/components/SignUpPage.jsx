@@ -62,6 +62,11 @@ const SignUpPage = () => {
   });
   return (
     <Container>
+      <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+        <Container>
+          <a href="/" className="navbar-brand">HexletChat</a>
+        </Container>
+      </nav>
       <Row>
         <Col className="col-9 m-auto mt-5">
           <h1 className="text-center">Регистрация</h1>
