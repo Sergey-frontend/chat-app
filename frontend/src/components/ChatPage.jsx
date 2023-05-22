@@ -4,6 +4,7 @@ import {
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Header from './Header';
 import Channels from './Channels';
 import Messages from './Messages';
@@ -44,6 +45,7 @@ const ChatPage = () => {
           <Row className="h-100 bg-white flex-md-row">
             <Channels />
             <Messages />
+            <ToastContainer />
           </Row>
           {renderModal(modalType)}
         </Container>

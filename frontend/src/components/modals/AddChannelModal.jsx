@@ -38,12 +38,12 @@ const AddChannelModal = () => {
 
       try {
         const response = await chatApi.createChannel(channelData);
-        toast.success('Wow so easy !');
+        toast.success(t('toast.add'));
         dispatch(channelActions.setCurrentChannelId(response.id));
         resetForm({ values: '' });
         dispatch(hideModal());
       } catch (error) {
-        console.error(error);
+        toast.error(t('toast.error'));
       }
     },
 

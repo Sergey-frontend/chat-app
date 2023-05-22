@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocketApi from '../../hooks/useSocketApi.hook';
@@ -42,9 +43,10 @@ const RenameChannelModal = () => {
     onSubmit: async (values) => {
       try {
         await chatApi.renameChannel({ id: channelId, name: values.name });
+        toast.success(t('toast.rename'));
         dispatch(hideModal());
       } catch (err) {
-        console.error(err);
+        toast.error(t('toast.error'));
       }
     },
   });

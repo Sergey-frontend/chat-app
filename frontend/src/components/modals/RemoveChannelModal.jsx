@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocketApi from '../../hooks/useSocketApi.hook';
 
@@ -14,8 +15,9 @@ const RemoveChannelModal = () => {
     try {
       await chatApi.removeChannel({ id: channelId });
       dispatch(hideModal());
+      toast.success(t('toast.remove'));
     } catch (err) {
-      console.error(err);
+      toast.error(t('toast.error'));
     }
   };
 
