@@ -1,8 +1,10 @@
+import React from 'react';
 import {
   Button, Form, Modal, FormText,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSocketApi from '../../hooks/useSocketApi.hook';
@@ -36,6 +38,7 @@ const AddChannelModal = () => {
 
       try {
         const response = await chatApi.createChannel(channelData);
+        toast.success('Wow so easy !');
         dispatch(channelActions.setCurrentChannelId(response.id));
         resetForm({ values: '' });
         dispatch(hideModal());

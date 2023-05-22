@@ -92,5 +92,11 @@ export default {
       key_few: '{{count}} сообщения',
       key_many: '{{count}} сообщений',
     },
+    toasty: {
+      add: 'Канал создан',
+      rename: 'Канал переименован',
+      delete: 'Канал удален',
+      error: 'Неизвестная ошибка',
+    },
   },
 };
