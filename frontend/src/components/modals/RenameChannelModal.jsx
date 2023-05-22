@@ -4,6 +4,7 @@ import {
   Form, Button, Modal, FormText,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocketApi from '../../hooks/useSocketApi.hook';
@@ -12,12 +13,10 @@ const RenameChannelModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const channelId = useSelector((state) => state.channels.currentChannelId);
 
-  // console.log(channels);
-  // console.log(channelId);
-
   const dispatch = useDispatch();
   const chatApi = useSocketApi();
   const inputEl = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputEl.current.select();
@@ -35,9 +34,9 @@ const RenameChannelModal = () => {
     validationSchema: Yup.object({
       name: Yup
         .string()
-        .min(3, 'renameModal.validation.length')
-        .notOneOf(channels.map((channel) => channel.name), 'renameModal.validation.unique')
-        .required('renameModal.validation.required'),
+        .min(3, t('renameChannelModal.validation.min'))
+        .notOneOf(channels.map((channel) => channel.name), t('renameChannelModal.validation.unique'))
+        .required(t('renameChannelModal.validation.required')),
     }),
 
     onSubmit: async (values) => {
@@ -53,7 +52,7 @@ const RenameChannelModal = () => {
   return (
     <Modal show onHide={() => dispatch(hideModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('renameChannelModal.header')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -78,7 +77,7 @@ const RenameChannelModal = () => {
             {
               formik.errors.name
               && formik.touched.name
-              && <FormText className="feedback text-danger mt-3">ошибка</FormText>
+              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             }
           </Form.Group>
           <div>
@@ -88,7 +87,7 @@ const RenameChannelModal = () => {
               variant="secondary"
               onClick={() => dispatch(hideModal())}
             >
-              Отмена
+              {t('renameChannelModal.cancel')}
             </Button>
             <Button
               className="m-1"
@@ -96,7 +95,7 @@ const RenameChannelModal = () => {
               role="button"
               type="submit"
             >
-              Переименовать
+              {t('renameChannelModal.rename')}
             </Button>
           </div>
         </Form>

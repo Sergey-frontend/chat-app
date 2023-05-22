@@ -1,21 +1,28 @@
-const NotFoundPage = () => (
-  <body>
-    <div className="d-flex align-items-center justify-content-center vh-100">
-      <div className="text-center">
-        <h1 className="display-1 fw-bold">404</h1>
-        <p className="fs-3">
-          {' '}
-          <span className="text-danger">Opps!</span>
-          {' '}
-          Page not found.
-        </p>
-        <p className="lead">
-          The page you’re looking for doesn’t exist.
-        </p>
-        <a href="/" className="btn btn-primary">Go Home</a>
+import { useTranslation } from 'react-i18next';
+
+const NotFoundPage = () => {
+  const { t } = useTranslation();
+  return (
+    <body>
+      <div className="d-flex align-items-center justify-content-center vh-100">
+        <div className="text-center">
+          <h1 className="display-1 fw-bold">{t('notFoundPage.number')}</h1>
+          <p className="fs-3">
+            {' '}
+            <span className="text-danger">{t('notFoundPage.danger')}</span>
+            {' '}
+            {t('notFoundPage.notFound')}
+          </p>
+          <p className="lead">
+            {t('notFoundPage.info')}
+          </p>
+          <a href="/" className="btn btn-primary">
+            {t('notFoundPage.redirect')}
+          </a>
+        </div>
       </div>
-    </div>
-  </body>
-);
+    </body>
+  );
+};
 
 export default NotFoundPage;

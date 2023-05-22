@@ -1,1 +1,96 @@
-export default {};
+export default {
+  translation: {
+    addChannelModal: {
+      header: 'Добавить канал',
+      placeholder: 'Введите имя канала',
+      cancel: 'Отменить',
+      submit: 'Отправить',
+      validation: {
+        min: 'Имя канала не может быть меньше трех символов',
+        unique: 'Канал с таким именем уже существует',
+        required: 'Обязательное поле',
+      },
+    },
+    removeChannelModal: {
+      header: 'Удалить канал',
+      body: 'Вы уверены?',
+      cancel: 'Отменить',
+      delete: 'Удалить',
+    },
+    renameChannelModal: {
+      header: 'Переименовать канал',
+      cancel: 'Отменить',
+      rename: 'Переименовать',
+      validation: {
+        min: 'Имя канала не может быть меньше трех символов',
+        unique: 'Канал с таким именем уже существует',
+        required: 'Обязательное поле',
+      },
+    },
+    loginPage: {
+      header: 'HexletChat',
+      formHeader: 'Войти в чат',
+      placeholderLogin: 'Ваш логин',
+      placeholderPassword: 'Ваш пароль',
+      submit: 'Войти',
+      haveNotAccount: 'Нет аккаунта?',
+      link: 'Регистрация',
+      validation: {
+        required: 'Обязательное поле',
+        minUsername: 'Логин должен быть не менее 4-х символов',
+        minPassword: 'Пароль должен быть не менее 4-х символов',
+        unknown: 'Неизвестная ошибка',
+        wrongData: 'Неверное имя пользователя или пароль',
+      },
+    },
+    chatHeader: {
+      title: 'HexletChat',
+      logOut: 'Выйти',
+    },
+    notFoundPage: {
+      number: '404',
+      danger: 'Opps!',
+      notFound: 'Page not found.',
+      info: 'The page you’re looking for doesn’t exist.',
+      redirect: 'Go Home',
+    },
+    signUpPage: {
+      header: 'Hexlet Chat',
+      title: 'Регистрация',
+      placeholderName: 'Имя пользователя',
+      placeholderPassword: 'Пароль',
+      placeholderConfirmPassord: 'Подтвердите пароль',
+      submit: 'Зарегистрироваться',
+      alreadyRegistered: 'Уже зарегистрированы?',
+      link: 'Авторизуйтесь',
+      validation: {
+        required: 'Обязательное поле',
+        minMaxUsername: 'От 3 до 20 симоволов',
+        minPassword: 'Не менее 6 симоволов',
+        confirmPassword: 'Пароли должны совпадать',
+        unknown: 'Неизвестная ошибка',
+        alreadyReg: 'Пользователь с данным именем уже зарегистрирован',
+      },
+    },
+    channels: {
+      id: '#',
+      title: 'Каналы',
+      plus: '+',
+      rename: 'Переименовать',
+      delete: 'Удалить',
+    },
+    messages: {
+      id: '#',
+      placeholder: 'Введите сообщение...',
+      label: 'Новое сообщение',
+      send: 'Отправить',
+      loading: 'LOADING',
+    },
+    messagesCount: {
+      key_zero: '{{count}} сообщений',
+      key_one: '{{count}} сообщение',
+      key_few: '{{count}} сообщения',
+      key_many: '{{count}} сообщений',
+    },
+  },
+};

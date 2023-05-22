@@ -3,27 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Container, Row, Col,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import routes from '../utils/routes';
 import useAuth from '../hooks/useAuth.hook';
 
-const validate = Yup.object({
-  username: Yup
-    .string()
-    .min(4, 'Логин должен быть не менее 4-х символов')
-    .required('Обязательное поле'),
-  password: Yup
-    .string()
-    .min(4, 'Логин должен быть не менее 4-х символов')
-    .required('Обязательное поле'),
-});
-
 const LoginPage = () => {
   const [authError, setAuthError] = useState(null);
   const navigate = useNavigate();
   const { logIn } = useAuth();
+  const { t } = useTranslation();
+
+  const validate = Yup.object({
+    username: Yup
+      .string()
+      .min(4, t('loginPage.validation.minUsername'))
+      .required(t('loginPage.validation.required')),
+    password: Yup
+      .string()
+      .min(4, t('loginPage.validation.minPassword'))
+      .required(t('loginPage.validation.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -40,12 +42,12 @@ const LoginPage = () => {
         setAuthError(null);
       } catch (error) {
         if (!error.isAxiosError) {
-          setAuthError('Неизвестная ошибка');
+          setAuthError(t('loginPage.validation.unknown'));
         }
         const { statusText } = error.response;
         const message = statusText === 'Unauthorized'
-          ? 'Неверное имя пользователя или пароль'
-          : 'Неизвестная ошибка';
+          ? t('loginPage.validation.wrongData')
+          : t('loginPage.validation.unknown');
         setAuthError(message);
       }
     },
@@ -55,14 +57,14 @@ const LoginPage = () => {
     <>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <Container>
-          <a href="/" className="navbar-brand">HexletChat</a>
+          <a href="/" className="navbar-brand">{t('loginPage.header')}</a>
         </Container>
       </nav>
       <Container className="mt-50 mt-5">
         <Row>
           <Col className=" border .mx-auto mb-5">
             <div style={{ padding: '15px' }}>
-              <h1 className="text-center">Войти в чат</h1>
+              <h1 className="text-center">{t('loginPage.formHeader')}</h1>
               <Form onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
@@ -70,7 +72,7 @@ const LoginPage = () => {
                     onChange={formik.handleChange}
                     name="username"
                     type="text"
-                    placeholder="Ваш логин"
+                    placeholder={t('loginPage.placeholderLogin')}
                   />
                   {formik.touched.username && formik.errors.username && (
                   <Form.Text className="text-danger">
@@ -85,7 +87,7 @@ const LoginPage = () => {
                     onChange={formik.handleChange}
                     name="password"
                     type="password"
-                    placeholder="Ваш пароль"
+                    placeholder={t('loginPage.placeholderPassword')}
                   />
                   <Form.Text className="text-danger">
                     {formik.touched.password && formik.errors.password}
@@ -94,7 +96,7 @@ const LoginPage = () => {
                 <Row>
                   <div>
                     <Button className="mb-10 w-100" variant="primary" type="submit">
-                      Войти
+                      {t('loginPage.submit')}
                     </Button>
                     <div className="text-danger">
                       {authError && <p>{authError}</p>}
@@ -105,9 +107,12 @@ const LoginPage = () => {
             </div>
             <div className="card-footer mb-1">
               <div className="text-center">
-                <span>Нет аккаунта? </span>
+                <span>
+                  {t('loginPage.haveNotAccount')}
+                  {' '}
+                </span>
                 <a href="/signup">
-                  Регистрация
+                  {t('loginPage.link')}
                 </a>
               </div>
             </div>

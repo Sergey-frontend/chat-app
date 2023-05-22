@@ -1,17 +1,19 @@
 import { Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import useSocketApi from '../hooks/useSocketApi.hook';
 import useAuth from '../hooks/useAuth.hook';
 
 const Messages = () => {
   const chatApi = useSocketApi();
   const { user } = useAuth();
-
+  const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
   const { channels, currentChannelId } = useSelector((state) => state.channels);
   const currentChannel = channels.find((c) => c.id === currentChannelId);
   const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
+  const count = currentChannelMessages.length;
 
   const [inputValue, setInputValue] = useState('');
   const controlInput = (e) => {
@@ -49,15 +51,13 @@ const Messages = () => {
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
           <b>
-            #
+            {t('messages.id')}
             {' '}
-            {currentChannel ? currentChannel.name : 'LOADING'}
+            {currentChannel ? currentChannel.name : t('messages.loading')}
           </b>
         </p>
         <span className="text-muted">
-          {currentChannelMessages.length}
-          {' '}
-          сообщений
+          {t('messagesCount.key', { count })}
         </span>
       </div>
 
@@ -76,8 +76,8 @@ const Messages = () => {
             <input
               onChange={controlInput}
               name="body"
-              aria-label="Новое сообщение"
-              placeholder="Введите сообщение..."
+              aria-label={t('messages.label')}
+              placeholder={t('messages.placeholder')}
               className="border-0 p-0 ps-2 form-control"
               value={inputValue}
             />

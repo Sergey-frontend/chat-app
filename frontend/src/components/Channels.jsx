@@ -1,5 +1,6 @@
 import { Col, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { setCurrentChannelId } from '../store/slices/channelsSlice';
 import { showModal } from '../store/slices/modalsSlice';
@@ -7,6 +8,7 @@ import { showModal } from '../store/slices/modalsSlice';
 const Channels = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((state) => state.channels);
+  const { t } = useTranslation();
 
   const renderChannels = () => {
     const channelsList = channels.map(({ id, name, removable }) => {
@@ -23,7 +25,9 @@ const Channels = () => {
               type="button"
               className={`w-100 text-start rounded-0 ${activeclassName}`}
             >
-              <span className="me-1">#</span>
+              <span className="me-1">
+                {t('channels.id')}
+              </span>
               {name}
             </button>
           </li>
@@ -38,7 +42,9 @@ const Channels = () => {
                 type="button"
                 className={`w-100 text-start rounded-0 ${activeclassName}`}
               >
-                <span className="me-1">#</span>
+                <span className="me-1">
+                  {t('channels.id')}
+                </span>
                 {name}
               </button>
 
@@ -48,18 +54,18 @@ const Channels = () => {
                 id="dropdown-split-basic"
                 className={activeclassName}
               >
-                <span className="visually-hidden">Переименовать</span>
+                <span className="visually-hidden">{t('channels.rename')}</span>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}
                 >
-                  Переименовать
+                  {t('channels.rename')}
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => dispatch(showModal({ modalType: 'removing', channelId: id }))}
                 >
-                  Удалить
+                  {t('channels.delete')}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -72,7 +78,9 @@ const Channels = () => {
   return (
     <Col className="border-end col-3">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>
+          {t('channels.title')}
+        </b>
         <button
           onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))}
           type="button"
@@ -88,7 +96,9 @@ const Channels = () => {
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
           </svg>
-          <span className="visually-hidden">+</span>
+          <span className="visually-hidden">
+            {t('channels.plus')}
+          </span>
         </button>
       </div>
       <ul

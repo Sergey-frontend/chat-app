@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Form, Button, Container, Row, Col, FormText,
 } from 'react-bootstrap';
@@ -9,26 +10,27 @@ import { useFormik } from 'formik';
 import routes from '../utils/routes';
 import useAuth from '../hooks/useAuth.hook';
 
-const validate = Yup.object({
-  username: Yup
-    .string()
-    .min(3, 'Минимальная длинна не должна быть меньше 3 симоволов')
-    .max(20, 'Максимальная длинна не должна быть больше 20 симоволов')
-    .required('Обязательное поле'),
-  password: Yup
-    .string()
-    .min(6, 'Минимальная длинна не должна быть меньше 6 симоволов')
-    .required('Обязательное поле'),
-  confirmPassword: Yup
-    .string()
-    .oneOf([Yup.ref('password'), null], 'Пароли не совпадают')
-    .required('Обязательное поле'),
-});
-
 const SignUpPage = () => {
   const [regError, setRegError] = useState();
   const navigate = useNavigate();
   const { logIn } = useAuth();
+  const { t } = useTranslation();
+
+  const validate = Yup.object({
+    username: Yup
+      .string()
+      .min(3, t('signUpPage.validation.minMaxUsername'))
+      .max(20, t('signUpPage.validation.minMaxUsername'))
+      .required(t('signUpPage.validation.required')),
+    password: Yup
+      .string()
+      .min(6, t('signUpPage.validation.minPassword'))
+      .required(t('signUpPage.validation.required')),
+    confirmPassword: Yup
+      .string()
+      .oneOf([Yup.ref('password'), null], t('signUpPage.validation.confirmPassword'))
+      .required(t('signUpPage.validation.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -49,12 +51,12 @@ const SignUpPage = () => {
         navigate('/');
       } catch (error) {
         if (!error.isAxiosError) {
-          setRegError('Неизвестная ошибка');
+          setRegError(t('signUpPage.validation.unknown'));
         }
         const { status } = error.response;
         const message = status === 409
-          ? 'Пользователь с данным именем уже зарегистрирован'
-          : 'Неизвестная ошибка';
+          ? t('signUpPage.validation.alreadyReg')
+          : t('signUpPage.validation.unknown');
         setRegError(message);
       }
     },
@@ -64,12 +66,12 @@ const SignUpPage = () => {
     <Container>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <Container>
-          <a href="/" className="navbar-brand">HexletChat</a>
+          <a href="/" className="navbar-brand">{t('signUpPage.header')}</a>
         </Container>
       </nav>
       <Row>
         <Col className="col-9 m-auto mt-5">
-          <h1 className="text-center">Регистрация</h1>
+          <h1 className="text-center">{t('signUpPage.title')}</h1>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-3 form-floating">
               <Form.Control
@@ -80,10 +82,10 @@ const SignUpPage = () => {
                 name="username"
                 autoComplete="off"
                 disabled={formik.isSubmitting}
-                placeholder="Введите имя пользователя"
+                placeholder={t('signUpPage.placeholderName')}
                 isInvalid={formik.errors.username && formik.touched.username}
               />
-              <Form.Label htmlFor="floatingLogin">Имя пользователя</Form.Label>
+              <Form.Label htmlFor="floatingLogin">{t('signUpPage.placeholderName')}</Form.Label>
               {
                 formik.errors.username
                 && formik.touched.username
@@ -99,10 +101,10 @@ const SignUpPage = () => {
                 name="password"
                 autoComplete="off"
                 disabled={formik.isSubmitting}
-                placeholder="Введите пароль"
+                placeholder={t('signUpPage.placeholderPassword')}
                 isInvalid={formik.errors.password && formik.touched.password}
               />
-              <Form.Label htmlFor="floatingPassword">Пароль</Form.Label>
+              <Form.Label htmlFor="floatingPassword">{t('signUpPage.placeholderPassword')}</Form.Label>
               <Form.Text className="text-danger">
                 {
                   formik.errors.password
@@ -120,10 +122,10 @@ const SignUpPage = () => {
                 name="confirmPassword"
                 autoComplete="off"
                 disabled={formik.isSubmitting}
-                placeholder="Подтверждение"
+                placeholder={t('signUpPage.placeholderConfirmPassord')}
                 isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
               />
-              <Form.Label htmlFor="floatingConfirmPassword">Подтвердите пароль</Form.Label>
+              <Form.Label htmlFor="floatingConfirmPassword">{t('signUpPage.placeholderConfirmPassord')}</Form.Label>
               {
                   (formik.errors.confirmPassword
                     && formik.touched.confirmPassword
@@ -137,12 +139,14 @@ const SignUpPage = () => {
               variant="primary"
               type="submit"
             >
-              Зарегистрироваться
+              {t('signUpPage.submit')}
             </Button>
           </Form>
           <p className="mt-3 text-center">
-            Уже зарегестрированы?
-            <Link style={{ marginLeft: 5 }} to="/login">Авторизуйтесь</Link>
+            {t('signUpPage.alreadyRegistered')}
+            <Link style={{ marginLeft: 5 }} to="/login">
+              {t('signUpPage.link')}
+            </Link>
           </p>
         </Col>
       </Row>

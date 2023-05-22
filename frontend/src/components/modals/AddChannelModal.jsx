@@ -1,8 +1,8 @@
-// import React, { useState } from 'react';
 import {
   Button, Form, Modal, FormText,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSocketApi from '../../hooks/useSocketApi.hook';
@@ -13,13 +13,14 @@ const AddChannelModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
   const chatApi = useSocketApi();
+  const { t } = useTranslation();
 
   const validate = Yup.object({
     name: Yup
       .string()
-      .min(3, 'Имя канала не может быть меньше трех символов')
-      .notOneOf(channels.map((c) => c.name), 'Канал с таким именем уже существует')
-      .required('Обязательное поле'),
+      .min(3, t('addChannelModal.validation.min'))
+      .notOneOf(channels.map((c) => c.name), t('addChannelModal.validation.unique'))
+      .required(t('addChannelModal.validation.required')),
   });
 
   const formik = useFormik({
@@ -49,7 +50,7 @@ const AddChannelModal = () => {
   return (
     <Modal show>
       <Modal.Header closeButton onHide={() => dispatch(hideModal())}>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -59,7 +60,7 @@ const AddChannelModal = () => {
               onChange={formik.handleChange}
               type="text"
               name="name"
-              placeholder="Введите имя канала"
+              placeholder={t('addChannelModal.placeholder')}
               autoFocus
               isInvalid={formik.errors.name && formik.touched.name}
             />
@@ -70,14 +71,14 @@ const AddChannelModal = () => {
             }
           </Form.Group>
           <Button variant="secondary" onClick={() => dispatch(hideModal())}>
-            Отменить
+            {t('addChannelModal.cancel')}
           </Button>
           <Button
             variant="primary"
             onClick={formik.handleSubmit}
             type="submit"
           >
-            Отправить
+            {t('addChannelModal.submit')}
           </Button>
         </Form>
       </Modal.Body>
