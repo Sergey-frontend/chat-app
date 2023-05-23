@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import Rollbar from 'rollbar';
 import leoProfanity from 'leo-profanity';
 import resources from './locales/index.js';
 import store from './store/store';
@@ -40,15 +42,25 @@ const init = async (socket) => {
   leoProfanity.add(leoProfanity.getDictionary('ru'));
   leoProfanity.add(leoProfanity.getDictionary('en'));
 
-  return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <SocketApiProvider socket={socket}>
-          <App />
-        </SocketApiProvider>
-      </I18nextProvider>
-    </Provider>
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR,
+    environment: 'production',
+  };
 
+  const rollbar = new Rollbar(rollbarConfig);
+
+  return (
+    <RollbarProvider config={rollbar}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n}>
+            <SocketApiProvider socket={socket}>
+              <App />
+            </SocketApiProvider>
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
