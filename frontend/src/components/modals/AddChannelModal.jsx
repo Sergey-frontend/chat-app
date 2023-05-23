@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Button, Form, Modal, FormText,
 } from 'react-bootstrap';
@@ -18,35 +18,34 @@ const AddChannelModal = () => {
   const { t } = useTranslation();
 
   const validate = Yup.object({
-    name: Yup
-      .string()
+    name: Yup.string()
       .min(3, t('addChannelModal.validation.min'))
       .notOneOf(channels.map((c) => c.name), t('addChannelModal.validation.unique'))
       .required(t('addChannelModal.validation.required')),
   });
 
+  const handleSubmit = useCallback(async (values, { resetForm }) => {
+    const channelData = {
+      name: values.name,
+      removable: true,
+    };
+
+    try {
+      const response = await chatApi.createChannel(channelData);
+      toast.success(t('toast.add'));
+      dispatch(channelActions.setCurrentChannelId(response.id));
+      resetForm({ values: '' });
+      dispatch(hideModal());
+    } catch (error) {
+      toast.error(t('toast.error'));
+    }
+  }, [chatApi, dispatch, t]);
+
   const formik = useFormik({
     initialValues: {
       name: '',
     },
-
-    onSubmit: async (values, { resetForm }) => {
-      const channelData = {
-        name: values.name,
-        removable: true,
-      };
-
-      try {
-        const response = await chatApi.createChannel(channelData);
-        toast.success(t('toast.add'));
-        dispatch(channelActions.setCurrentChannelId(response.id));
-        resetForm({ values: '' });
-        dispatch(hideModal());
-      } catch (error) {
-        toast.error(t('toast.error'));
-      }
-    },
-
+    onSubmit: handleSubmit,
     validationSchema: validate,
   });
 
@@ -67,20 +66,14 @@ const AddChannelModal = () => {
               autoFocus
               isInvalid={formik.errors.name && formik.touched.name}
             />
-            {
-              formik.errors.name
-              && formik.touched.name
-              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
-            }
+            {formik.errors.name && formik.touched.name && (
+              <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
+            )}
           </Form.Group>
           <Button variant="secondary" onClick={() => dispatch(hideModal())}>
             {t('addChannelModal.cancel')}
           </Button>
-          <Button
-            variant="primary"
-            onClick={formik.handleSubmit}
-            type="submit"
-          >
+          <Button variant="primary" onClick={formik.handleSubmit} type="submit">
             {t('addChannelModal.submit')}
           </Button>
         </Form>
@@ -88,4 +81,5 @@ const AddChannelModal = () => {
     </Modal>
   );
 };
+
 export default AddChannelModal;

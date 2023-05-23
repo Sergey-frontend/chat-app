@@ -68,7 +68,7 @@ const Messages = () => {
         {messagesList}
       </div>
 
-      <div className="mt-auto px-5 py-3">
+      <div className="mt-auto px-5">
         <form
           onSubmit={formHendler}
           noValidate=""

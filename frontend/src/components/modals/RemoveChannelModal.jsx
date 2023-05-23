@@ -1,3 +1,4 @@
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +12,7 @@ const RemoveChannelModal = () => {
   const chatApi = useSocketApi();
   const { t } = useTranslation();
 
-  const handleRemove = async () => {
+  const handleRemove = useCallback(async () => {
     try {
       await chatApi.removeChannel({ id: channelId });
       dispatch(hideModal());
@@ -19,7 +20,7 @@ const RemoveChannelModal = () => {
     } catch (err) {
       toast.error(t('toast.error'));
     }
-  };
+  }, [chatApi, channelId, dispatch, t]);
 
   return (
     <Modal show onHide={() => dispatch(hideModal())}>

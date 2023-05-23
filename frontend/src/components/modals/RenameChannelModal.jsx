@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Form, Button, Modal, FormText,
@@ -25,7 +25,16 @@ const RenameChannelModal = () => {
 
   const currentChannel = channels.find((channel) => channel.id === channelId);
   const currentChannelName = currentChannel.name;
-  console.log(currentChannel.name);
+
+  const handleRename = useCallback(async (values) => {
+    try {
+      await chatApi.renameChannel({ id: channelId, name: values.name });
+      toast.success(t('toast.rename'));
+      dispatch(hideModal());
+    } catch (err) {
+      toast.error(t('toast.error'));
+    }
+  }, [chatApi, channelId, dispatch, t]);
 
   const formik = useFormik({
     initialValues: {
@@ -40,15 +49,7 @@ const RenameChannelModal = () => {
         .required(t('renameChannelModal.validation.required')),
     }),
 
-    onSubmit: async (values) => {
-      try {
-        await chatApi.renameChannel({ id: channelId, name: values.name });
-        toast.success(t('toast.rename'));
-        dispatch(hideModal());
-      } catch (err) {
-        toast.error(t('toast.error'));
-      }
-    },
+    onSubmit: handleRename,
   });
 
   return (
@@ -66,7 +67,7 @@ const RenameChannelModal = () => {
               value={formik.values.name}
               onChange={formik.handleChange}
               ref={inputEl}
-              aria-label="имя чего-то"
+              aria-label="form"
               name="name"
               type="text"
               autoFocus
@@ -74,7 +75,7 @@ const RenameChannelModal = () => {
               isInvalid={formik.errors.name && formik.touched.name}
             />
             <Form.Label className="visually-hidden">
-              имя
+              channel rename
             </Form.Label>
             {
               formik.errors.name
