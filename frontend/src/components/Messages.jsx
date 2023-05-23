@@ -2,6 +2,7 @@ import { Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import useSocketApi from '../hooks/useSocketApi.hook';
 import useAuth from '../hooks/useAuth.hook';
 
@@ -38,12 +39,14 @@ const Messages = () => {
     e.target.value = '';
     const formData = new FormData(e.target);
     const body = formData.get('body');
-    const data = {
-      body,
+    const clearedMessage = leoProfanity.clean(body);
+    const messageData = {
+      body: clearedMessage,
       channelId: currentChannelId,
       username: user.username,
     };
-    chatApi.sendMessage(data);
+    chatApi.sendMessage(messageData);
+    setInputValue('');
   };
 
   return (
