@@ -66,32 +66,40 @@ const LoginPage = () => {
             <div style={{ padding: '15px' }}>
               <h1 className="text-center">{t('loginPage.formHeader')}</h1>
               <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                    name="username"
-                    type="text"
-                    placeholder={t('loginPage.placeholderLogin')}
-                  />
-                  {formik.touched.username && formik.errors.username && (
-                  <Form.Text className="text-danger">
-                    {formik.errors.username}
-                  </Form.Text>
-                  )}
-                  <Form.Text className="text-danger" />
+                <Form.Group controlId="username">
+                  <Form.Floating className="mb-3">
+                    <Form.Control
+                      name="username"
+                      autoComplete="username"
+                      required
+                      placeholder={t('loginPage.placeholderLogin')}
+                      value={formik.values.username}
+                      onChange={formik.handleChange}
+                    />
+                    <Form.Label htmlFor="username">{t('loginPage.placeholderLogin')}</Form.Label>
+                    {formik.touched.username && formik.errors.username && (
+                    <Form.Text className="text-danger">
+                      {formik.errors.username}
+                    </Form.Text>
+                    )}
+                  </Form.Floating>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Control
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    name="password"
-                    type="password"
-                    placeholder={t('loginPage.placeholderPassword')}
-                  />
-                  <Form.Text className="text-danger">
-                    {formik.touched.password && formik.errors.password}
-                  </Form.Text>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Floating className="mb-3">
+                    <Form.Control
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      name="password"
+                      type="password"
+                      placeholder={t('loginPage.placeholderPassword')}
+                    />
+                    <Form.Label htmlFor="password">{t('loginPage.placeholderPassword')}</Form.Label>
+                    {formik.touched.password && formik.errors.password && (
+                    <Form.Text className="text-danger">
+                      {formik.errors.password}
+                    </Form.Text>
+                    )}
+                  </Form.Floating>
                 </Form.Group>
                 <Row>
                   <div>
