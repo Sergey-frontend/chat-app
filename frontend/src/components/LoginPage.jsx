@@ -71,6 +71,7 @@ const LoginPage = () => {
                     <Form.Control
                       name="username"
                       autoComplete="username"
+                      className={`form-control ${formik.touched.username && formik.errors.username ? 'is-invalid' : ''}`}
                       required
                       placeholder={t('loginPage.placeholderLogin')}
                       value={formik.values.username}
@@ -78,7 +79,7 @@ const LoginPage = () => {
                     />
                     <Form.Label htmlFor="username">{t('loginPage.placeholderLogin')}</Form.Label>
                     {formik.touched.username && formik.errors.username && (
-                    <Form.Text className="text-danger">
+                    <Form.Text className="invalid-tooltip">
                       {formik.errors.username}
                     </Form.Text>
                     )}
@@ -91,11 +92,12 @@ const LoginPage = () => {
                       onChange={formik.handleChange}
                       name="password"
                       type="password"
+                      className={`form-control ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
                       placeholder={t('loginPage.placeholderPassword')}
                     />
                     <Form.Label htmlFor="password">{t('loginPage.placeholderPassword')}</Form.Label>
                     {formik.touched.password && formik.errors.password && (
-                    <Form.Text className="text-danger">
+                    <Form.Text className="invalid-tooltip">
                       {formik.errors.password}
                     </Form.Text>
                     )}
@@ -112,6 +114,7 @@ const LoginPage = () => {
                   </div>
                 </Row>
               </Form>
+
             </div>
             <div className="card-footer mb-1">
               <div className="text-center">
