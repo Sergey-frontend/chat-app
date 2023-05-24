@@ -53,6 +53,7 @@ const LoginPage = () => {
     },
     validationSchema: validate,
   });
+
   return (
     <>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
@@ -92,13 +93,13 @@ const LoginPage = () => {
                       onChange={formik.handleChange}
                       name="password"
                       type="password"
-                      className={`form-control ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
+                      className={`form-control ${formik.touched.password && (authError || formik.errors.password) ? 'is-invalid' : ''}`}
                       placeholder={t('loginPage.placeholderPassword')}
                     />
                     <Form.Label htmlFor="password">{t('loginPage.placeholderPassword')}</Form.Label>
-                    {formik.touched.password && formik.errors.password && (
+                    {formik.touched.password && (formik.errors.password || authError) && (
                     <Form.Text className="invalid-tooltip">
-                      {formik.errors.password}
+                      {authError || formik.errors.password}
                     </Form.Text>
                     )}
                   </Form.Floating>
