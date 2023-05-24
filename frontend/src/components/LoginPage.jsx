@@ -19,11 +19,9 @@ const LoginPage = () => {
   const validate = Yup.object({
     username: Yup
       .string()
-      .min(4, t('loginPage.validation.minUsername'))
       .required(t('loginPage.validation.required')),
     password: Yup
       .string()
-      .min(4, t('loginPage.validation.minPassword'))
       .required(t('loginPage.validation.required')),
   });
 
@@ -72,8 +70,7 @@ const LoginPage = () => {
                     <Form.Control
                       name="username"
                       autoComplete="username"
-                      className={`form-control ${formik.touched.username && formik.errors.username ? 'is-invalid' : ''}`}
-                      required
+                      className={`form-control ${formik.touched.username && (authError || formik.errors.username) ? 'is-invalid' : ''}`}
                       placeholder={t('loginPage.placeholderLogin')}
                       value={formik.values.username}
                       onChange={formik.handleChange}
@@ -97,11 +94,12 @@ const LoginPage = () => {
                       placeholder={t('loginPage.placeholderPassword')}
                     />
                     <Form.Label htmlFor="password">{t('loginPage.placeholderPassword')}</Form.Label>
-                    {formik.touched.password && (formik.errors.password || authError) && (
-                    <Form.Text className="invalid-tooltip">
-                      {authError || formik.errors.password}
-                    </Form.Text>
-                    )}
+                    {
+                  formik.errors.password
+                  && formik.touched.password
+                  && <Form.Text className="invalid-tooltip">{t(formik.errors.password)}</Form.Text>
+                }
+                    <Form.Text className="invalid-tooltip">{t(authError)}</Form.Text>
                   </Form.Floating>
                 </Form.Group>
                 <Row>
@@ -109,9 +107,6 @@ const LoginPage = () => {
                     <Button className="mb-10 w-100" variant="primary" type="submit">
                       {t('loginPage.submit')}
                     </Button>
-                    <div className="text-danger">
-                      {authError && <p>{authError}</p>}
-                    </div>
                   </div>
                 </Row>
               </Form>
