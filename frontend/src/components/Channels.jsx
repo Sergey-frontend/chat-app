@@ -23,9 +23,9 @@ const Channels = () => {
             <button
               onClick={() => dispatch(setCurrentChannelId(id))}
               type="button"
-              className={`w-100 text-start rounded-0 ${activeclassName}`}
+              className={`w-100 text-start rounded-0 ${activeclassName} text-truncate overflow-hidden`}
             >
-              <span className="me-1">
+              <span className="me-1 text-truncate overflow-hidden">
                 {t('channels.id')}
               </span>
               {name}
@@ -40,9 +40,9 @@ const Channels = () => {
             <Dropdown as={ButtonGroup} className="w-100" onClick={() => dispatch(setCurrentChannelId(id))}>
               <button
                 type="button"
-                className={`w-100 text-start rounded-0 ${activeclassName}`}
+                className={`w-100 text-start rounded-0 ${activeclassName} text-truncate overflow-hidden`}
               >
-                <span className="me-1">
+                <span className="me-1 text-truncate overflow-hidden">
                   {t('channels.id')}
                 </span>
                 {name}
