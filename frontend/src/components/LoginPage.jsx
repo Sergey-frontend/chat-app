@@ -99,7 +99,7 @@ const LoginPage = () => {
                   && formik.touched.password
                   && <div className="invalid-tooltip">{t(formik.errors.password)}</div>
                 }
-                    <div className="invalid-tooltip">{t(authError)}</div>
+                    <div className="invalid-tooltip">{authError}</div>
                   </Form.Floating>
                 </Form.Group>
                 <Row>
