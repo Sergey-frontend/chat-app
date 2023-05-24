@@ -65,8 +65,8 @@ export default {
       link: 'Авторизуйтесь',
       validation: {
         required: 'Обязательное поле',
-        minMaxUsername: 'От 3 до 20 симоволов',
-        minPassword: 'Не менее 6 симоволов',
+        minMaxUsername: 'От 3 до 20 символов',
+        minPassword: 'Не менее 6 символов',
         confirmPassword: 'Пароли должны совпадать',
         unknown: 'Ошибка соединения',
         alreadyReg: 'Пользователь с данным именем уже зарегистрирован',
