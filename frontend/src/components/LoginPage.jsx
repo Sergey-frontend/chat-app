@@ -83,7 +83,8 @@ const LoginPage = () => {
                     )}
                   </Form.Floating>
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+                {/* <Form.Group controlId="formBasicPassword"> */}
+                <Form.Group controlId="password">
                   <Form.Floating className="mb-3">
                     <Form.Control
                       value={formik.values.password}
