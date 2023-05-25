@@ -89,6 +89,7 @@ const LoginPage = () => {
                     <Form.Control
                       value={formik.values.password}
                       onChange={formik.handleChange}
+                      disabled={formik.isSubmitting}
                       name="password"
                       type="password"
                       className={`form-control ${formik.touched.password && (authError || formik.errors.password) ? 'is-invalid' : ''}`}
@@ -105,7 +106,12 @@ const LoginPage = () => {
                 </Form.Group>
                 <Row>
                   <div>
-                    <Button className="mb-10 w-100" variant="primary" type="submit">
+                    <Button
+                      className="mb-10 w-100"
+                      variant="primary"
+                      type="submit"
+                      disabled={formik.isSubmitting}
+                    >
                       {t('loginPage.submit')}
                     </Button>
                   </div>

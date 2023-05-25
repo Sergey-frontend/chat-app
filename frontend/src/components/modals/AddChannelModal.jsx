@@ -62,6 +62,7 @@ const AddChannelModal = () => {
               onChange={formik.handleChange}
               type="text"
               name="name"
+              disabled={formik.isSubmitting}
               placeholder={t('addChannelModal.label')}
               autoFocus
               isInvalid={formik.errors.name && formik.touched.name}

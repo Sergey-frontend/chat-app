@@ -70,6 +70,7 @@ const RenameChannelModal = () => {
               aria-label="form"
               name="name"
               type="text"
+              disabled={formik.isSubmitting}
               autoFocus
               autoComplete="off"
               isInvalid={formik.errors.name && formik.touched.name}
@@ -86,6 +87,7 @@ const RenameChannelModal = () => {
             <Button
               className="m-1"
               role="button"
+              disabled={formik.isSubmitting}
               variant="secondary"
               onClick={() => dispatch(hideModal())}
             >
@@ -94,6 +96,7 @@ const RenameChannelModal = () => {
             <Button
               className="m-1"
               variant="primary"
+              disabled={formik.isSubmitting}
               role="button"
               type="submit"
             >
