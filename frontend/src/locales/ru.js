@@ -20,6 +20,7 @@ export default {
     renameChannelModal: {
       header: 'Переименовать канал',
       cancel: 'Отменить',
+      label: 'Имя канала',
       rename: 'Отправить',
       validation: {
         min: 'От 3 до 20 символов',
@@ -75,6 +76,7 @@ export default {
     channels: {
       id: '#',
       title: 'Каналы',
+      dropdownLabel: 'Управление каналом',
       plus: '+',
       rename: 'Переименовать',
       delete: 'Удалить',

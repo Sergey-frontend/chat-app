@@ -61,7 +61,7 @@ const RenameChannelModal = () => {
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group
             className="mb-3"
-            controlId="exampleForm.ControlInput1"
+            controlId="name"
           >
             <Form.Control
               value={formik.values.name}
@@ -74,9 +74,8 @@ const RenameChannelModal = () => {
               autoComplete="off"
               isInvalid={formik.errors.name && formik.touched.name}
             />
-            <Form.Label className="visually-hidden">
-              channel rename
-            </Form.Label>
+            <Form.Label className="visually-hidden" htmlFor="name">{t('renameChannelModal.label')}</Form.Label>
+
             {
               formik.errors.name
               && formik.touched.name

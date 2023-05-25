@@ -54,7 +54,7 @@ const Channels = () => {
                 id="dropdown-split-basic"
                 className={activeclassName}
               >
-                <span className="visually-hidden">{t('channels.rename')}</span>
+                <span className="visually-hidden">{t('channels.dropdownLabel')}</span>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
