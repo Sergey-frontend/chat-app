@@ -56,16 +56,18 @@ const AddChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Control
               value={formik.values.name}
               onChange={formik.handleChange}
               type="text"
               name="name"
-              placeholder={t('addChannelModal.placeholder')}
+              placeholder={t('addChannelModal.label')}
               autoFocus
               isInvalid={formik.errors.name && formik.touched.name}
             />
+            <Form.Label className="visually-hidden" htmlFor="name">{t('addChannelModal.label')}</Form.Label>
+
             {formik.errors.name && formik.touched.name && (
               <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             )}

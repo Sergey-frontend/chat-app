@@ -2,7 +2,7 @@ export default {
   translation: {
     addChannelModal: {
       header: 'Добавить канал',
-      placeholder: 'Введите имя канала',
+      label: 'Имя канала',
       cancel: 'Отменить',
       submit: 'Отправить',
       validation: {
