@@ -22,8 +22,7 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: make install
+        run: npm ci --no-optional
 
       - name: Run ESLint
         run: npx eslint --ext .js,.jsx .
-
