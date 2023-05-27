@@ -46,9 +46,7 @@ const Channels = () => {
                 className="w-100 rounded-0 text-start text-truncate"
                 onClick={() => dispatch(setCurrentChannelId(id))}
               >
-                <span className="me-1 text-truncate overflow-hidden">
-                  {t('channels.id')}
-                </span>
+
                 {name}
               </Button>
 
@@ -56,9 +54,9 @@ const Channels = () => {
                 split
                 variant={hendlerVariant()}
                 id="dropdown-split-basic"
-
-              />
-
+              >
+                <span className="visually-hidden">{t('channels.dropdownLabel')}</span>
+              </Dropdown.Toggle>
               <Dropdown.Menu onClick={() => dispatch(setCurrentChannelId(id))}>
                 <Dropdown.Item
                   onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}
