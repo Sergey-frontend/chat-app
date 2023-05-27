@@ -59,9 +59,9 @@ const LoginPage = () => {
           <a href="/" className="navbar-brand">{t('loginPage.header')}</a>
         </Container>
       </nav>
-      <Container className="mt-50 mt-5">
-        <Row>
-          <Col className=" border .mx-auto mb-5">
+      <Container className="mt-5 container d-flex align-items-center justify-content-center">
+        <Row className="w-50">
+          <Col className=" border rounded .mx-auto mb-5">
             <div style={{ padding: '15px' }}>
               <h1 className="text-center">{t('loginPage.formHeader')}</h1>
               <Form onSubmit={formik.handleSubmit}>
@@ -83,7 +83,6 @@ const LoginPage = () => {
                     )}
                   </Form.Floating>
                 </Form.Group>
-                {/* <Form.Group controlId="formBasicPassword"> */}
                 <Form.Group controlId="password">
                   <Form.Floating className="mb-3">
                     <Form.Control
