@@ -5,7 +5,8 @@ lint-frontend-fix:
 	make -C frontend lint-fix
 
 install:
-	npm ci
+	@cd frontend && npm ci
+	@npm ci
 
 start-frontend:
 	make -C frontend start
