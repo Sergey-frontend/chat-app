@@ -61,7 +61,7 @@ const LoginPage = () => {
       </nav>
       <Container className="mt-5 container d-flex align-items-center justify-content-center">
         <Row className="w-50">
-          <Col className=" border rounded .mx-auto mb-5">
+          <Col className=" border rounded .mx-auto mb-5 shadow">
             <div style={{ padding: '15px' }}>
               <h1 className="text-center">{t('loginPage.formHeader')}</h1>
               <Form onSubmit={formik.handleSubmit}>

@@ -63,94 +63,96 @@ const SignUpPage = () => {
     validationSchema: validate,
   });
   return (
-    <Container>
+    <>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <Container>
-          <a href="/" className="navbar-brand">{t('signUpPage.header')}</a>
+          <a href="/" className="navbar-brand">{t('loginPage.header')}</a>
         </Container>
       </nav>
-      <Row>
-        <Col className="col-9 m-auto mt-5">
-          <h1 className="text-center">{t('signUpPage.title')}</h1>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group className="mb-3 form-floating">
-              <Form.Control
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                type="text"
-                id="floatingLogin"
-                name="username"
-                autoComplete="off"
-                disabled={formik.isSubmitting}
-                placeholder={t('signUpPage.placeholderName')}
-                isInvalid={formik.errors.username && formik.touched.username}
-              />
-              <Form.Label htmlFor="floatingLogin">{t('signUpPage.placeholderName')}</Form.Label>
-              {
+      <Container className="mt-5 container d-flex align-items-center justify-content-center">
+        <Row className="w-50">
+          <Col className=" border rounded .mx-auto mb-5 shadow">
+            <h1 className="text-center p-3">{t('signUpPage.title')}</h1>
+            <Form onSubmit={formik.handleSubmit} className="px-4">
+              <Form.Group className="mb-3 form-floating">
+                <Form.Control
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  type="text"
+                  id="floatingLogin"
+                  name="username"
+                  autoComplete="off"
+                  disabled={formik.isSubmitting}
+                  placeholder={t('signUpPage.placeholderName')}
+                  isInvalid={formik.errors.username && formik.touched.username}
+                />
+                <Form.Label htmlFor="floatingLogin">{t('signUpPage.placeholderName')}</Form.Label>
+                {
                 formik.errors.username
                 && formik.touched.username
                 && <FormText className="feedback text-danger mt-3">{formik.errors.username}</FormText>
               }
-            </Form.Group>
-            <Form.Group className="mb-3 form-floating">
-              <Form.Control
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                type="password"
-                id="floatingPassword"
-                name="password"
-                autoComplete="off"
-                disabled={formik.isSubmitting}
-                placeholder={t('signUpPage.placeholderPassword')}
-                isInvalid={formik.errors.password && formik.touched.password}
-              />
-              <Form.Label htmlFor="floatingPassword">{t('signUpPage.placeholderPassword')}</Form.Label>
-              <Form.Text className="text-danger">
-                {
+              </Form.Group>
+              <Form.Group className="mb-3 form-floating">
+                <Form.Control
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  type="password"
+                  id="floatingPassword"
+                  name="password"
+                  autoComplete="off"
+                  disabled={formik.isSubmitting}
+                  placeholder={t('signUpPage.placeholderPassword')}
+                  isInvalid={formik.errors.password && formik.touched.password}
+                />
+                <Form.Label htmlFor="floatingPassword">{t('signUpPage.placeholderPassword')}</Form.Label>
+                <Form.Text className="text-danger">
+                  {
                   formik.errors.password
                   && formik.touched.password
                   && <FormText className="feedback text-danger mt-3">{formik.errors.password}</FormText>
                 }
-              </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3 form-floating">
-              <Form.Control
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                type="password"
-                id="floatingConfirmPassword"
-                name="confirmPassword"
-                autoComplete="off"
-                disabled={formik.isSubmitting}
-                placeholder={t('signUpPage.placeholderConfirmPassord')}
-                isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
-              />
-              <Form.Label htmlFor="floatingConfirmPassword">{t('signUpPage.placeholderConfirmPassord')}</Form.Label>
-              {
+                </Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-3 form-floating">
+                <Form.Control
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  type="password"
+                  id="floatingConfirmPassword"
+                  name="confirmPassword"
+                  autoComplete="off"
+                  disabled={formik.isSubmitting}
+                  placeholder={t('signUpPage.placeholderConfirmPassord')}
+                  isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
+                />
+                <Form.Label htmlFor="floatingConfirmPassword">{t('signUpPage.placeholderConfirmPassord')}</Form.Label>
+                {
                   (formik.errors.confirmPassword
                     && formik.touched.confirmPassword
                     && <FormText className="feedback text-danger mt-3">{formik.errors.confirmPassword}</FormText>)
                     || <FormText className="feedback text-danger mt-3">{regError}</FormText>
                 }
-            </Form.Group>
-            <Button
-              disabled={formik.isSubmitting}
-              className="mb-10 w-100"
-              variant="primary"
-              type="submit"
-            >
-              {t('signUpPage.submit')}
-            </Button>
-          </Form>
-          <p className="mt-3 text-center">
-            {t('signUpPage.alreadyRegistered')}
-            <Link style={{ marginLeft: 5 }} to="/login">
-              {t('signUpPage.link')}
-            </Link>
-          </p>
-        </Col>
-      </Row>
-    </Container>
+              </Form.Group>
+              <Button
+                disabled={formik.isSubmitting}
+                className="mb-10 w-100"
+                variant="primary"
+                type="submit"
+              >
+                {t('signUpPage.submit')}
+              </Button>
+            </Form>
+            <p className="mt-3 text-center">
+              {t('signUpPage.alreadyRegistered')}
+              <Link style={{ marginLeft: 5 }} to="/login">
+                {t('signUpPage.link')}
+              </Link>
+            </p>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
