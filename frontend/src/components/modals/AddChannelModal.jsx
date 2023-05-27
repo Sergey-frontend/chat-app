@@ -73,10 +73,10 @@ const AddChannelModal = () => {
               <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             )}
           </Form.Group>
-          <Button variant="secondary" onClick={() => dispatch(hideModal())}>
+          <Button variant="secondary" onClick={() => dispatch(hideModal())} className="m-1">
             {t('addChannelModal.cancel')}
           </Button>
-          <Button variant="primary" onClick={formik.handleSubmit} type="submit">
+          <Button variant="primary" onClick={formik.handleSubmit} type="submit" className="m-1">
             {t('addChannelModal.submit')}
           </Button>
         </Form>
