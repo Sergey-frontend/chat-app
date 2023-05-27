@@ -1,4 +1,6 @@
-import { Col, ButtonGroup, Dropdown } from 'react-bootstrap';
+import {
+  Col, ButtonGroup, Dropdown, Button,
+} from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
@@ -16,6 +18,7 @@ const Channels = () => {
         'btn-secondary': id === currentChannelId,
         'btn-outline-secondary': id !== currentChannelId,
       });
+      const hendlerVariant = () => (id === currentChannelId ? 'secondary' : 'outline-secondary');
 
       if (!removable) {
         return (
@@ -37,26 +40,26 @@ const Channels = () => {
       return (
         <li key={id} className="nav-item w-100">
           <div role="group" className="d-flex dropdown btn-group">
-            <Dropdown as={ButtonGroup} className="w-100" onClick={() => dispatch(setCurrentChannelId(id))}>
-              <button
-                type="button"
-                className={`w-100 text-start rounded-0 ${activeclassName} text-truncate overflow-hidden`}
+            <Dropdown as={ButtonGroup} className="w-100">
+              <Button
+                variant={hendlerVariant()}
+                className="w-100 rounded-0 text-start text-truncate"
+                onClick={() => dispatch(setCurrentChannelId(id))}
               >
                 <span className="me-1 text-truncate overflow-hidden">
                   {t('channels.id')}
                 </span>
                 {name}
-              </button>
+              </Button>
 
               <Dropdown.Toggle
                 split
-                variant="outline-secondary"
+                variant={hendlerVariant()}
                 id="dropdown-split-basic"
-                className={activeclassName}
-              >
-                <span className="visually-hidden">{t('channels.dropdownLabel')}</span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
+
+              />
+
+              <Dropdown.Menu onClick={() => dispatch(setCurrentChannelId(id))}>
                 <Dropdown.Item
                   onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}
                 >
@@ -76,7 +79,7 @@ const Channels = () => {
     return channelsList;
   };
   return (
-    <Col className="col-4 col-md-3 border-end px-0 bg-light flex-column h-100 d-flex">
+    <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>
           {t('channels.title')}
