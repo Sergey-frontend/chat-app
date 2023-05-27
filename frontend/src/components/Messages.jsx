@@ -26,6 +26,16 @@ const Messages = () => {
 
   const messagesList = currentChannelMessages.map((msg) => {
     const { body, username, id } = msg;
+    if (username === user.username) {
+      return (
+        <div key={id} className="text-break mb-2">
+          <b className="text-white bg-dark">{username}</b>
+          :
+          {' '}
+          {body}
+        </div>
+      );
+    }
     return (
       <div key={id} className="text-break mb-2">
         <b>{username}</b>
