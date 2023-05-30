@@ -48,7 +48,7 @@ const SignUpPage = () => {
         const response = await axios.post(routes.signupPath(), userData);
         console.log(response);
         logIn({ ...response.data });
-        navigate('/');
+        navigate(routes.home);
       } catch (error) {
         if (!error.isAxiosError) {
           setRegError(t('signUpPage.validation.unknown'));
@@ -66,7 +66,7 @@ const SignUpPage = () => {
     <>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <Container>
-          <a href="/" className="navbar-brand">{t('loginPage.header')}</a>
+          <a href={routes.home} className="navbar-brand">{t('loginPage.header')}</a>
         </Container>
       </nav>
       <Container className="mt-5 container d-flex align-items-center justify-content-center">
@@ -145,7 +145,7 @@ const SignUpPage = () => {
             </Form>
             <p className="mt-3 text-center">
               {t('signUpPage.alreadyRegistered')}
-              <Link style={{ marginLeft: 5 }} to="/login">
+              <Link style={{ marginLeft: 5 }} to={routes.home}>
                 {t('signUpPage.link')}
               </Link>
             </p>

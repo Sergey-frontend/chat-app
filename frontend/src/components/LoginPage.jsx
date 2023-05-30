@@ -36,7 +36,7 @@ const LoginPage = () => {
       try {
         const response = await axios.post(routes.loginPath(), userData);
         logIn(response.data);
-        navigate('/');
+        navigate(routes.home);
         setAuthError(null);
       } catch (error) {
         if (!error.isAxiosError) {
@@ -124,7 +124,7 @@ const LoginPage = () => {
                   {t('loginPage.haveNotAccount')}
                   {' '}
                 </span>
-                <a href="/signup">
+                <a href={routes.signip}>
                   {t('loginPage.link')}
                 </a>
               </div>

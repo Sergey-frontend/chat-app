@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import routes from '../utils/routes';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const NotFoundPage = () => {
           <p className="lead">
             {t('notFoundPage.info')}
           </p>
-          <a href="/" className="btn btn-primary">
+          <a href={routes.home} className="btn btn-primary">
             {t('notFoundPage.redirect')}
           </a>
         </div>
