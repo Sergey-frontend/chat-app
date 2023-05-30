@@ -13,6 +13,10 @@ import { addMessage } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 
 const init = async (socket) => {
+  socket.on('disconnect', () => {
+    localStorage.removeItem('user');
+  });
+
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
   });

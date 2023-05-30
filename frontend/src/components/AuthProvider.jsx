@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {
@@ -19,9 +19,13 @@ const AuthProvider = ({ children }) => {
     headers: { Authorization: `Bearer ${user.token}` },
   }), [user]);
 
-  const authValue = useMemo(() => ({
-    user, logIn, logOut, getAuthHeaders,
-  }), [user, logIn, logOut, getAuthHeaders]);
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const authValue = {
+    user,
+    logIn,
+    logOut,
+    getAuthHeaders,
+  };
 
   return (
     <AuthContext.Provider value={authValue}>
