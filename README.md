@@ -10,7 +10,7 @@ Chat App is a user-friendly chat application designed for seamless communication
 **Real-time Messaging:** Send and receive messages in the chat interface in real time.<br>
 **Profanity Filter:** Automatically filter out inappropriate language to promote a positive and respectful chat environment.<br>
 <br>
-The Chat App project aims to provide a straightforward and efficient communication tool for users to connect and exchange ideas. Whether you're collaborating on a project, organizing a team, or simply engaging in friendly conversations, Chat App ensures a smooth and enjoyable chat experience.<br>
+The **Chat App** project aims to provide a straightforward and efficient communication tool for users to connect and exchange ideas. Whether you're collaborating on a project, organizing a team, or simply engaging in friendly conversations, Chat App ensures a smooth and enjoyable chat experience.<br>
 [Explore the demo by following this link.](https://frontend-project-12-production-83e2.up.railway.app)
 ### How to use:
 System requirements: node 16.x version
