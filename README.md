@@ -17,10 +17,10 @@ The **Chat App** project aims to provide a straightforward and efficient communi
 System requirements: node 16.x version
 ```bash
 #clone this repository on your machine
-$git clone git@github.com:Sergey-frontend/frontend-project-12
+$git clone git@github.com:Sergey-frontend/chat-app
 
 #go to directory where you downloaded it
-$cd frontend-project-12
+$cd chat-app
 
 # run the one of these command to install all necessary dependencies
 $make install
