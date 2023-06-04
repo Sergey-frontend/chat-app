@@ -1,5 +1,6 @@
 #### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Sergey-frontend/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/Sergey-frontend/frontend-project-12/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4d2e0b754c9ae7e1397c/maintainability)](https://codeclimate.com/github/Sergey-frontend/frontend-project-12/maintainability)
 ## Chat App
 Chat App is a user-friendly chat application designed for seamless communication. It provides a platform for users to register, log in, and engage in conversations through various channels. With its intuitive interface, users can create, delete, and rename channels according to their preferences. One notable feature of Chat App is the built-in profanity filter that helps maintain a respectful environment by censoring offensive language.
 
